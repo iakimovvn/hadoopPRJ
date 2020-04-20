@@ -5,5 +5,5 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/iakimovvn/hadoopPRJ.git
+          uri: https://github.com/iakimovvn/hadoopProperties.git
           force-pull: true
