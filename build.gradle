@@ -1,16 +1,17 @@
-plugins {
-    id 'java'
+subprojects {
+    version '0.0.1'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url "http://repo.spring.io/release" }
+        maven { url "http://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/libs-snapshot" }
+        maven { url "http://repo.spring.io/milestone" }
+        maven { url "https://repo.spring.io/libs-milestone" }
+    }
 }
 
-group 'ru.yakimov'
-version '0.0.1'
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
 }
