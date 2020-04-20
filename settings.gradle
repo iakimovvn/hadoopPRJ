@@ -1,2 +1,5 @@
 rootProject.name = 'hadoopPRJ'
+include 'WebHadoopPRJ'
+include 'SoapHDFS'
+include 'ConfigServerHadoopPRJ'
 
