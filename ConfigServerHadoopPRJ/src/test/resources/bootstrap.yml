@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: config-server-hadoop
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/iakimovvn/hadoopPRJ.git
+          force-pull: true
