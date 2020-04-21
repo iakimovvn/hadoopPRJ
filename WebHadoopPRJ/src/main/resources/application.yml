@@ -2,3 +2,18 @@ server:
   servlet:
     context-path: /
 
+spring:
+  datasource:
+    url: jdbc:postgresql://192.168.0.10:5432/hadoopprj?useUnicode=true&characterEncoding=utf8
+    driver-class-name: org.postgresql.Driver
+    username: vladimir
+    password: Bhbyf>hnftdf2011
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  thymeleaf:
+    cache: false
+  flyway:
+    locations: classpath:/db/migration

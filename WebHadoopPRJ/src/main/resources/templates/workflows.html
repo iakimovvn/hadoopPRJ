@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="../../public/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="css/general.css">
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/3.2.1/jquery.min.js"
+            th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            th:src="@{/webjars/popper.js/1.12.9/dist/esm/popper.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            th:href="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
+    <title>Big Data Loader</title>
+</head>
+<body>
+<header>
+    <nav th:replace="~{fragments/header :: header}">Header</nav>
+</header>
+<main role="main" class="container">
+    <div class="text-left" th:if="${not #lists.isEmpty(workflowlist)}">
+
+        <h1 class="m-3">Workflows</h1>
+
+        <div class="lead">
+            <table class="table table-striped">
+                <tr>
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Creation date</th>
+                    <th>Last run date</th>
+                    <th>Log</th>
+                    <th>View</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                    <th>Run</th>
+                </tr>
+                <tr th:each="workflow : ${workflowlist}">
+                    <td th:text="${workflow.title}">Workflow title</td>
+                    <td th:text="${workflow.getType().title}">Workflow type</td>
+                    <td th:text="${workflow.createDate}">Creation date</td>
+                    <td th:text="${workflow.lastRunDate}">Last run date</td>
+                    <td><a th:href="${ '/workflows/log/' + workflow.id}">Log</a></td>
+                    <td><a th:href="${ '/workflows/' + workflow.id}">View</a></td>
+                    <td><a th:href="${'/workflows/edit/' + workflow.id}">Edit</a></td>
+                    <td><a class="btn btn-danger" th:href="${'/workflows/delete/' + workflow.id}">Delete</a></td>
+                    <td><a class="btn btn-outline-success" th:href="${'/workflows/run/' + workflow.id}">Run</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</main>
+<footer>
+    <div th:insert="~{fragments/footer :: footer}">&copy; 2020 Vladimir Yakimov</div>
+</footer>
+
+</body>
+</html>
