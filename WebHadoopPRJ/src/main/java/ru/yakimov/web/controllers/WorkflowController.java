@@ -41,7 +41,7 @@ public class WorkflowController {
             @RequestParam(required = false) Date lastRunFrom,
             @RequestParam(required = false) Date lastDateTo,
             @RequestParam(required = false) String title,
-            @RequestParam(required = false) String className
+            @RequestParam(required = false) String type
                        ) {
         model.addAttribute("workflows", workflowService.findAll(
                 userRepository.findOneByLogin(principal.getName()),
@@ -50,7 +50,7 @@ public class WorkflowController {
                 lastRunFrom,
                 lastDateTo,
                 title,
-                className
+                type
                 )
         );
         model.addAttribute("types", typeService.findAll());

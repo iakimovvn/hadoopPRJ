@@ -42,5 +42,7 @@ public class Workflow extends PersistableEntity {
     @JoinColumn(name = "wfl_user")
     private Wfl_user wfl_user;
 
+    private boolean deleted;
+
 
 }

@@ -21,7 +21,37 @@
     <nav th:replace="~{fragments/header :: header}">Header</nav>
 </header>
 <main role="main" class="container">
-    <div class="text-left" th:if="${not #lists.isEmpty(workflowlist)}">
+    <div class="text-left" th:if="${not #lists.isEmpty(workflows)}">
+
+        <form class="form-inline mt-2 p-1 border-1 d-flex justify-content-between" th:action="@{/workflow}" method="get">
+
+            <div class="form-group">
+                <input type="text" class="form-control select-input" id="formGroupExampleInput" placeholder="title" name="title">
+            </div>
+
+            <div class="form-group ">
+                <input class="form-control select-input" type="date" name="createDateFrom"  id="createDateFrom">
+            </div>
+            <div class="form-group  ">
+                <input class="form-control select-input" type="date" name="createDateTo" id="createDateTo">
+            </div>
+            <div class="form-group  ">
+                <input class="form-control select-input" type="date" name="lastRunDateFrom" id="lastRunDateFrom">
+            </div>
+            <div class="form-group">
+                <input class="form-control select-input" type="date" name="lastRunDateTo" id="lastRunDateTo">
+            </div>
+
+            <select class="custom-select select-input" name="type">
+                <option th:text="'Not selected'" th:value="null">Type</option>
+                <option th:each="type : ${types}"
+                        th:value="${type.title}"
+                        th:text="${type.title}">
+                </option>
+            </select>
+
+            <button type="submit" class="btn btn-secondary">Select</button>
+        </form>
 
         <h1 class="m-3">Workflows</h1>
 
@@ -33,18 +63,16 @@
                     <th>Creation date</th>
                     <th>Last run date</th>
                     <th>Log</th>
-                    <th>View</th>
                     <th>Edit</th>
                     <th>Delete</th>
                     <th>Run</th>
                 </tr>
-                <tr th:each="workflow : ${workflowlist}">
-                    <td th:text="${workflow.title}">Workflow title</td>
-                    <td th:text="${workflow.getType().title}">Workflow type</td>
-                    <td th:text="${workflow.createDate}">Creation date</td>
-                    <td th:text="${workflow.lastRunDate}">Last run date</td>
+                <tr th:each="workflow : ${workflows}">
+                    <td><a th:href="${ '/workflows/' + workflow.id}">[[  ${workflow.title}  ]]</a></td>
+                    <td th:text="${workflow.wfl_type.title}">Workflow type</td>
+                    <td th:text="${workflow.create_date}">Creation date</td>
+                    <td th:text="${workflow.last_run_date}">Last run date</td>
                     <td><a th:href="${ '/workflows/log/' + workflow.id}">Log</a></td>
-                    <td><a th:href="${ '/workflows/' + workflow.id}">View</a></td>
                     <td><a th:href="${'/workflows/edit/' + workflow.id}">Edit</a></td>
                     <td><a class="btn btn-danger" th:href="${'/workflows/delete/' + workflow.id}">Delete</a></td>
                     <td><a class="btn btn-outline-success" th:href="${'/workflows/run/' + workflow.id}">Run</a></td>

@@ -19,7 +19,7 @@ import ru.yakimov.web.exceptions.EntityNotFoundException;
 public class WebExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(Exception.class)
-    public String handleProductNotFoundException(final EntityNotFoundException ex, Model model) {
+    public String handleProductNotFoundException(final Exception ex, Model model) {
         model.addAttribute("errorCode", 404);
         model.addAttribute("errorText", "NOT FOUND");
         model.addAttribute("errorMessage", ex.getMessage());

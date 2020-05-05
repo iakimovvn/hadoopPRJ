@@ -63,12 +63,12 @@ public class WorkflowService {
             predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("last_run_date"), lastDateTo));
         }
 
-        if(title != null){
-            predicates.add(criteriaBuilder.like(root.get("title"), title));
+        if(title != null && !title.isEmpty()){
+            predicates.add(criteriaBuilder.like(root.get("title"), "%"+title+"%"));
 
         }
 
-        if(typeTitle != null){
+        if(typeTitle != null && !typeTitle.isEmpty()){
             predicates.add(criteriaBuilder.equal(root.get("wfl_type"), typeService.findByTitle(typeTitle)));
         }
 

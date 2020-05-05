@@ -21,7 +21,7 @@
     <nav class="navbar navbar-expand-lg navbar-static-top navbar-dark bg-primary" th:fragment="header">
         <div class="container">
             <a class="navbar-brand" href="#" th:href="@{/}">
-                <img src="../static/images/logo.jpg" th:src="@{/images/logo.jpg}" alt="Big data loader" class="img-thumbnail">
+                <img src="../static/images/logo.jpg" th:src="@{images/logo.jpg}" alt="Big data loader" class="img-thumbnail">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -33,10 +33,10 @@
                         <a class="nav-link" href="/index" th:href="@{/}" >Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="/workflows" th:href="@{/workflows}">Workflows</a>
+                        <a class="nav-link" href="/workflow" th:href="@{/workflow}">Workflows</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="/workflows/new" th:href="@{/workflows/new}">
+                        <a class="nav-link" href="/workflow/new" th:href="@{/workflow/new}">
                             <span class="badge badge-warning">+ New workflow</span>
                         </a>
                     </li>
@@ -71,9 +71,6 @@
     </nav>
 </div>
 
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
 </body>
 </html>
