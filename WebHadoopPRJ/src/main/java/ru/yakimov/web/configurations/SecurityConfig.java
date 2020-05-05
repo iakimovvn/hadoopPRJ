@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/profile/**").authenticated()
-                .antMatchers("/orders/history").authenticated()
+                .antMatchers("/workflow/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")
-                .permitAll();
+            .permitAll();
     }
 
     @Bean

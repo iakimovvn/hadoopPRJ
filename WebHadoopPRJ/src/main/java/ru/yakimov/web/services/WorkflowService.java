@@ -1,11 +1,8 @@
 package ru.yakimov.web.services;
 
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.yakimov.web.persistence.entities.Wfl_type;
 import ru.yakimov.web.persistence.entities.Wfl_user;
 import ru.yakimov.web.persistence.entities.Workflow;
 import ru.yakimov.web.persistence.repositories.WorkflowRepository;
@@ -35,8 +32,9 @@ public class WorkflowService {
     private EntityManager entityManager;
 
     private final WorkflowRepository workflowRepository;
+    private final TypeService typeService;
 
-    public List<Workflow> findAll(Wfl_user user, Date createDateFrom, Date createDateTo, Date lastRunFrom, Date lastDateTo, String title, Wfl_type type){
+    public List<Workflow> findAll(Wfl_user user, Date createDateFrom, Date createDateTo, Date lastRunFrom, Date lastDateTo, String title, String typeTitle){
 
         if(user == null) {
             return new ArrayList<>();
@@ -66,12 +64,12 @@ public class WorkflowService {
         }
 
         if(title != null){
-            predicates.add(criteriaBuilder.equal(root.get("title"), title));
+            predicates.add(criteriaBuilder.like(root.get("title"), title));
 
         }
 
-        if(type != null){
-            predicates.add(criteriaBuilder.equal(root.get("wfl_type"), type));
+        if(typeTitle != null){
+            predicates.add(criteriaBuilder.equal(root.get("wfl_type"), typeService.findByTitle(typeTitle)));
         }
 
         criteriaQuery.select(root);

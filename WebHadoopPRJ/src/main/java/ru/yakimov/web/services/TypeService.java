@@ -25,5 +25,9 @@ public class TypeService {
         return typeRepository.findAll();
     }
 
+    public Wfl_type findByTitle(String title){
+        return typeRepository.findFirstByTitle(title);
+    }
+
 
 }

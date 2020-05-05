@@ -22,8 +22,8 @@ create table wfl_type
     title      varchar(255) not null unique
 );
 
-insert into wfl_type(id, version ,class_name, title) values ('bc76edae-bc3a-4e39-9964-389c02e953ea', 0, 'ru.yakimov.mysqlToDir.SqoopMysqlTpDir', 'Sqoop load from mysql to tmp directory');
-insert into wfl_type(id, version ,class_name, title) values ('a9f72115-493d-406e-b73b-0e17a46b9a9d', 0, 'ru.yakimov.deleteFromTable.DeleteFromTable', 'Delete from table');
+insert into wfl_type(id, version ,class_name, title) values ('bc76edae-bc3a-4e39-9964-389c02e953ea', 0, 'ru.yakimov.mysqlToDir.SqoopMysqlTpDir', 'SqoopMysqlTpDir');
+insert into wfl_type(id, version ,class_name, title) values ('a9f72115-493d-406e-b73b-0e17a46b9a9d', 0, 'ru.yakimov.deleteFromTable.DeleteFromTable', 'DeleteFromTable');
 
 
 

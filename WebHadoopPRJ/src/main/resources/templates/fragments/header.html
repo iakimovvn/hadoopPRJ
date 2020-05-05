@@ -43,7 +43,7 @@
                 </ul>
                 <ul class="navbar-nav my-2 my-lg-0">
                     <li class="nav-item active" th:if="${#authorization.expression('!isAuthenticated()')}">
-                        <form class="form-inline my-lg-0" th:action="@{/login}" method="post">
+                        <form class="form-inline my-lg-0" th:action="@{/authenticateTheUser}" method="post">
                             <div class="form-group mb-2">
                                 <label for="staticEmail2" class="sr-only">User Name :</label>
                                 <input type="text" name="username" class="form-control" id="staticEmail2" value="username">

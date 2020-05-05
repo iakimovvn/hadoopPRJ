@@ -39,11 +39,11 @@ public class UserService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Wfl_user user = userRepository.findOneByLogin(username);
-        if (user == null) {
+        Wfl_user wfl_user = userRepository.findOneByLogin(username);
+        if (wfl_user == null) {
             throw new UsernameNotFoundException("Invalid username or password");
         }
-        return new User(user.getLogin(), user.getPassword(), mapRolesToAuthorities(user.getRole()));
+        return new User(wfl_user.getLogin(), wfl_user.getPassword(), mapRolesToAuthorities(wfl_user.getRole()));
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Role role) {
@@ -51,16 +51,17 @@ public class UserService implements UserDetailsService {
     }
 
 
-    public Wfl_user save(Wfl_user user){
-        return userRepository.save(user);
-    }
 
-    public void delete(Wfl_user user){
-        userRepository.delete(user);
+    public void delete(Wfl_user wfl_user){
+        userRepository.delete(wfl_user);
     }
 
     public boolean isUserExist(String login) {
         return userRepository.existsByLogin(login);
+    }
+
+    public Wfl_user save(Wfl_user wfl_user){
+        return userRepository.save(wfl_user);
     }
 
 }
