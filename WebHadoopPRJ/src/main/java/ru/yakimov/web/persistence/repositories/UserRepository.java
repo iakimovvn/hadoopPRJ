@@ -12,4 +12,6 @@ import java.util.UUID;
  */
 
 public interface UserRepository extends CrudRepository<Wfl_user, UUID> {
+    Wfl_user findOneByLogin(String login);
+    boolean existsByLogin(String login);
 }

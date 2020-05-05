@@ -18,9 +18,14 @@ create table wfl_type
 (
     id uuid DEFAULT uuid_generate_v4() UNIQUE NOT NULL CONSTRAINT wfl_type_pkey primary key,
     version    integer not null,
-    class_name varchar(255),
-    title      varchar(255)
+    class_name varchar(255) not null unique,
+    title      varchar(255) not null unique
 );
+
+insert into wfl_type(id, version ,class_name, title) values ('bc76edae-bc3a-4e39-9964-389c02e953ea', 0, 'ru.yakimov.mysqlToDir.SqoopMysqlTpDir', 'Sqoop load from mysql to tmp directory');
+insert into wfl_type(id, version ,class_name, title) values ('a9f72115-493d-406e-b73b-0e17a46b9a9d', 0, 'ru.yakimov.deleteFromTable.DeleteFromTable', 'Delete from table');
+
+
 
 DROP TABLE IF EXISTS wfl_database;
 
@@ -73,18 +78,19 @@ create table wfl_user
 (
     id uuid DEFAULT uuid_generate_v4() UNIQUE NOT NULL CONSTRAINT  wfl_user_pkey primary key,
     version    integer not null,
-    email      varchar(255),
+    login      varchar(255) UNIQUE NOT NULL,
+    password   varchar(255) NOT NULL,
     first_name varchar(255),
     last_name  varchar(255),
-    password   varchar(255),
     phone      varchar(255),
-    role       varchar(255)
+    email      varchar(255) UNIQUE NOT NULL,
+    role       varchar(255) NOT NULL
 );
 
 
-INSERT INTO wfl_user (id, version, phone, password, email, first_name, last_name, role) VALUES ('6b718067-e1e4-4202-a7e2-7339ea0d6cb4', 0,'anonymous', 'anonymous', 'anonymous@supershop.com', 'anonymous', 'anonymous', 'ROLE_CUSTOMER');
-INSERT INTO wfl_user (id, version,  phone, password, email, first_name, last_name, role) VALUES ('fbe5a8e7-8555-4ee8-bff2-c572447e5f25', 0,'11111111', '$2a$10$5rAOMKmVsh9.NlzXTLLbq.XwouGdg3dwohvb5/HDn692YfdrLthO2', 'admin@supershop.com', 'Admin', 'Admin','ROLE_ADMIN');
-INSERT INTO wfl_user (id, version, phone, password, email, first_name, last_name, role) VALUES ('04c8bd30-ba4e-4e82-b996-db907e37a2c6', 0,'22222222', '$2a$10$5rAOMKmVsh9.NlzXTLLbq.XwouGdg3dwohvb5/HDn692YfdrLthO2', 'user@supershop.com', 'User', 'User', 'ROLE_ADMIN');
+INSERT INTO wfl_user (id, version,login ,phone, password, email, first_name, last_name, role) VALUES ('6b718067-e1e4-4202-a7e2-7339ea0d6cb4', 0,'anonymous','anonymous', 'anonymous', 'anonymous@supershop.com', 'anonymous', 'anonymous', 'ROLE_CUSTOMER');
+INSERT INTO wfl_user (id, version,login,  phone, password, email, first_name, last_name, role) VALUES ('fbe5a8e7-8555-4ee8-bff2-c572447e5f25', 0,'11111111','11111111', '$2a$10$5rAOMKmVsh9.NlzXTLLbq.XwouGdg3dwohvb5/HDn692YfdrLthO2', 'admin@supershop.com', 'Admin', 'Admin','ROLE_ADMIN');
+INSERT INTO wfl_user (id, version,login, phone, password, email, first_name, last_name, role) VALUES ('04c8bd30-ba4e-4e82-b996-db907e37a2c6', 0,'22222222','22222222', '$2a$10$5rAOMKmVsh9.NlzXTLLbq.XwouGdg3dwohvb5/HDn692YfdrLthO2', 'user@supershop.com', 'User', 'User', 'ROLE_ADMIN');
 
 
 
@@ -114,13 +120,14 @@ create table wfl_logfile
 (
     id uuid DEFAULT uuid_generate_v4() UNIQUE NOT NULL CONSTRAINT wfl_logfile_pkey primary key,
     version     integer not null,
-    date        date,
+    date        date not null default now(),
     file        varchar(255),
-    workflow_id uuid
+    workflow_id uuid not null
         constraint FK_logfile_workflow
             references workflow
             ON UPDATE CASCADE ON DELETE CASCADE
 );
+
 
 
 DROP TABLE IF EXISTS wfl_config_directory_from;
