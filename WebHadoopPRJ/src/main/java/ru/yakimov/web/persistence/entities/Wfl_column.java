@@ -10,6 +10,7 @@ import javax.persistence.Entity;
  * User: Якимов В.Н.
  * E-mail: yakimovvn@bk.ru
  */
+
 @Data
 @Entity
 @Builder
