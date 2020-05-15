@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="../../public/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="/css/general.css">
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/3.2.1/jquery.min.js"
+            th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            th:src="@{/webjars/popper.js/1.12.9/dist/esm/popper.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            th:href="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
+    <title>Big Data Loader</title>
+</head>
+<body>
+<header>
+    <nav th:replace="~{fragments/header :: header(Workflows)}">Header</nav>
+</header>
+<main role="main" class="container" th:object="${workflow}">
+
+    <h1 th:text="*{title}" class="m-3">Workflow</h1>
+
+    <div class="lead">
+        <table class="table table-striped">
+            <tr>
+                <th>Type</th>
+                <th>Work class</th>
+                <th>Create date</th>
+                <th>Lust run date</th>
+            </tr>
+            <tr>
+                <td th:text="*{wfl_type.title}">Type title</td>
+                <td th:text="*{wfl_type.class_name}">Type class</td>
+                <td th:text="*{create_date.toString()}">Create date</td>
+                <td th:text="*{last_run_date.toString()}">Last date run</td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <h3>Configuration data</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Dirs from path</th>
+                <th>Dir to</th>
+                <th>Partitions</th>
+            </tr>
+            <tr>
+                <td>
+                    <p th:each="dir : *{wfl_config.wfl_directories_from}">[[  ${dir.path}  ]]</p>
+                </td>
+                <td th:text="*{wfl_config.wfl_directory_to.path}">Dir to</td>
+                <td th:each="partitionCol : *{wfl_config.partitions}">
+                    <p>[[  ${partitionCol.name}+'/'+${partitionCol.type} ]]</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="form-group" th:if="*{not #lists.isEmpty(wfl_config.wfl_tables)}">
+
+        <h3 class="m-3">Tables</h3>
+
+        <div class="lead">
+            <table class="table table-striped">
+                <tr>
+                    <th>Name</th>
+                    <th>Primaries</th>
+                    <th>Database url</th>
+                    <th>username</th>
+                    <th>password</th>
+                </tr>
+                <tr th:each="table : *{wfl_config.wfl_tables}">
+                    <td th:text="${table.name}">Table name</td>
+                    <td th:each="prim : ${table.primaries}">
+                        <p>[[  ${prim.name+'/'+prim.type }  ]]</p>
+                    </td>
+                    <td th:text="${table.w_database.url}">Url database</td>
+                    <td th:text="${table.w_database.username}">Username</td>
+                    <td th:text="${table.w_database.password}">Password</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="form-group" th:if="${not #lists.isEmpty(logsList)}">
+        <h3 class="m-3">Log files</h3>
+        <div class="lead">
+            <table class="table col-5">
+                <tr th:each="logfile : ${logsList}">
+                    <td>
+                        <a th:href="${ '/workflow/log/' + logfile.id}">[[  ${logfile.file}+': '+${logfile.date}  ]]</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" th:href="${'/workflows/log/delete/' + logfile.id}">Delete</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</main>
+<footer>
+    <div th:insert="~{fragments/footer :: footer}">&copy; 2020 Vladimir Yakimov</div>
+</footer>
+
+</body>
+</html>

@@ -16,6 +16,7 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by IntelliJ Idea.
@@ -76,5 +77,9 @@ public class WorkflowService {
         criteriaQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[]{})));
 
         return entityManager.createQuery(criteriaQuery).getResultList();
+    }
+
+    public Workflow getById(UUID uuid){
+        return workflowRepository.getById(uuid);
     }
 }

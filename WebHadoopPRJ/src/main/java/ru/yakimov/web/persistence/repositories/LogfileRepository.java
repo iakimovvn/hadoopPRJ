@@ -10,7 +10,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ru.yakimov.web.persistence.entities.Wfl_logfile;
+import ru.yakimov.web.persistence.entities.Workflow;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface LogfileRepository extends JpaRepository<Wfl_logfile, UUID> {
@@ -25,4 +27,6 @@ public interface LogfileRepository extends JpaRepository<Wfl_logfile, UUID> {
             nativeQuery = true
     )
     String obtainLogfilePathByWorkflowId(@Param("id") UUID id);
+
+    List<Wfl_logfile> findAllByWorkflow(Workflow workflow);
 }

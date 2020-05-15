@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="images/favicon.ico">
+    <link rel="icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="../../public/css/bootstrap.min.css"
           th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css}">
     <link rel="stylesheet" href="css/general.css">
@@ -18,7 +18,7 @@
 </head>
 <body>
 <header>
-    <nav th:replace="~{fragments/header :: header}">Header</nav>
+    <nav th:replace="~{fragments/header :: header(Workflows)}">Header</nav>
 </header>
 <main role="main" class="container">
     <div class="text-left" th:if="${not #lists.isEmpty(workflows)}">
@@ -68,14 +68,14 @@
                     <th>Run</th>
                 </tr>
                 <tr th:each="workflow : ${workflows}">
-                    <td><a th:href="${ '/workflows/' + workflow.id}">[[  ${workflow.title}  ]]</a></td>
+                    <td><a th:href="${ '/workflow/' + workflow.id}">[[  ${workflow.title}  ]]</a></td>
                     <td th:text="${workflow.wfl_type.title}">Workflow type</td>
                     <td th:text="${workflow.create_date}">Creation date</td>
                     <td th:text="${workflow.last_run_date}">Last run date</td>
-                    <td><a th:href="${ '/workflows/log/' + workflow.id}">Log</a></td>
-                    <td><a th:href="${'/workflows/edit/' + workflow.id}">Edit</a></td>
-                    <td><a class="btn btn-danger" th:href="${'/workflows/delete/' + workflow.id}">Delete</a></td>
-                    <td><a class="btn btn-outline-success" th:href="${'/workflows/run/' + workflow.id}">Run</a></td>
+                    <td><a th:href="${ '/workflow/log/' + workflow.id}">Log</a></td>
+                    <td><a th:href="${'/workflow/edit/' + workflow.id}">Edit</a></td>
+                    <td><a class="btn btn-danger" th:href="${'/workflow/delete/' + workflow.id}">Delete</a></td>
+                    <td><a class="btn btn-outline-success" th:href="${'/workflow/run/' + workflow.id}">Run</a></td>
                 </tr>
             </table>
         </div>
