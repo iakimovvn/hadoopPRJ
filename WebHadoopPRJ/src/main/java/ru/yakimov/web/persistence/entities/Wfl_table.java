@@ -4,7 +4,9 @@ import lombok.*;
 import ru.yakimov.web.persistence.entities.utils.PersistableEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,7 +29,7 @@ public class Wfl_table extends PersistableEntity {
     @JoinTable(name="wfl_table_primaries", joinColumns=
     @JoinColumn(name="wfl_table", referencedColumnName="id"), inverseJoinColumns=
     @JoinColumn(name="wfl_column", referencedColumnName="id"))
-    private Set <Wfl_column> primaries = new HashSet<>();
+    private List<Wfl_column> primaries = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "database")

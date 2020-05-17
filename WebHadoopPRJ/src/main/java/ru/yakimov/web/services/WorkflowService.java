@@ -82,4 +82,8 @@ public class WorkflowService {
     public Workflow getById(UUID uuid){
         return workflowRepository.getById(uuid);
     }
+
+    public Workflow save(Workflow workflow){
+        return workflowRepository.save(workflow);
+    }
 }

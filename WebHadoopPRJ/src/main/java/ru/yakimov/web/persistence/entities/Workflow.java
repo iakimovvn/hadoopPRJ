@@ -34,7 +34,7 @@ public class Workflow extends PersistableEntity {
     private Wfl_type wfl_type;
 
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "wfl_config")
     private Wfl_config wfl_config;
 
