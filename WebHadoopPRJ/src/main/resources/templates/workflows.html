@@ -68,14 +68,14 @@
                     <th>Run</th>
                 </tr>
                 <tr th:each="workflow : ${workflows}">
-                    <td><a th:href="${ '/workflow/' + workflow.id}">[[  ${workflow.title}  ]]</a></td>
+                    <td><a th:href="${ '/workflow/' + workflow.uuid}">[[  ${workflow.title}  ]]</a></td>
                     <td th:text="${workflow.wfl_type.title}">Workflow type</td>
                     <td th:text="${workflow.create_date}">Creation date</td>
                     <td th:text="${workflow.last_run_date}">Last run date</td>
-                    <td><a th:href="${ '/workflow/log/' + workflow.id}">Log</a></td>
-                    <td><a th:href="${'/workflow/edit/' + workflow.id}">Edit</a></td>
-                    <td><a class="btn btn-danger" th:href="${'/workflow/delete/' + workflow.id}">Delete</a></td>
-                    <td><a class="btn btn-outline-success" th:href="${'/workflow/run/' + workflow.id}">Run</a></td>
+                    <td><a th:href="${ '/workflow/log/' + workflow.uuid}">Log</a></td>
+                    <td><a th:href="${'/workflow/edit/' + workflow.uuid}">Edit</a></td>
+                    <td><a class="btn btn-danger" th:href="${'/workflow/delete/' + workflow.uuid}">Delete</a></td>
+                    <td><a class="btn btn-outline-success" th:href="${'/workflow/run/' + workflow.uuid}">Run</a></td>
                 </tr>
             </table>
         </div>

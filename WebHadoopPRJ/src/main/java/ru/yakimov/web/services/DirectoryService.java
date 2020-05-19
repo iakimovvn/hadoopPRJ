@@ -2,10 +2,8 @@ package ru.yakimov.web.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.yakimov.web.persistence.entities.Wfl_directory;
+import ru.yakimov.web.persistence.entities.Wfl_directory_from;
 import ru.yakimov.web.persistence.repositories.DirectoryRepository;
-
-import java.util.List;
 
 /**
  * Created by IntelliJ Idea.
@@ -18,11 +16,11 @@ import java.util.List;
 public class DirectoryService {
     private final DirectoryRepository directoryRepository;
 
-    public Wfl_directory save(Wfl_directory directory){
+    public Wfl_directory_from save(Wfl_directory_from directory){
         return directoryRepository.save(directory);
     }
 
-    public Iterable<Wfl_directory> saveAll(Iterable<Wfl_directory> directoryIterable){
+    public Iterable<Wfl_directory_from> saveAll(Iterable<Wfl_directory_from> directoryIterable){
         return directoryRepository.saveAll(directoryIterable);
     }
 }

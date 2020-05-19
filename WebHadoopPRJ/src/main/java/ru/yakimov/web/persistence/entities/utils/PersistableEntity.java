@@ -24,7 +24,7 @@ public abstract class PersistableEntity implements Serializable {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private UUID id;
+    private UUID uuid;
 
     private int version;
 }

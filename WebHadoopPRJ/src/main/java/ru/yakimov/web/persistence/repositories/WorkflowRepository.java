@@ -13,6 +13,6 @@ import java.util.UUID;
  */
 
 public interface WorkflowRepository extends JpaRepository<Workflow, UUID> {
-    Workflow getById(UUID uuid);
+    Workflow getByUuid(UUID uuid);
 
 }

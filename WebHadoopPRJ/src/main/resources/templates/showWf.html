@@ -23,7 +23,7 @@
 <main role="main" class="container" th:object="${workflow}">
 
     <h1 th:text="*{title}" class="m-3">Workflow</h1>
-    <a th:href="'/workflow/edit/' + *{id}">edit</a>
+    <a th:href="'/workflow/edit/' + *{uuid}">edit</a>
 
     <div class="lead">
         <table class="table table-striped">
@@ -94,10 +94,10 @@
             <table class="table col-5">
                 <tr th:each="logfile : ${logsList}">
                     <td>
-                        <a th:href="${ '/workflow/log/' + logfile.id}">[[  ${logfile.file}+': '+${logfile.date}  ]]</a>
+                        <a th:href="${ '/workflow/log/' + logfile.uuid}">[[  ${logfile.file}+': '+${logfile.date}  ]]</a>
                     </td>
                     <td>
-                        <a class="btn btn-danger" th:href="${'/workflow/log/delete/' + logfile.id}">Delete</a>
+                        <a class="btn btn-danger" th:href="${'/workflow/log/delete/' + logfile.uuid}">Delete</a>
                     </td>
                 </tr>
             </table>

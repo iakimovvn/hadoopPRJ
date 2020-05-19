@@ -3,8 +3,9 @@ package ru.yakimov.web.persistence.entities;
 import lombok.*;
 import ru.yakimov.web.persistence.entities.utils.PersistableEntity;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  * Created by IntelliJ Idea.
@@ -18,15 +19,12 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Wfl_logfile extends PersistableEntity {
+public class Wfl_partition extends PersistableEntity {
+    private String name;
 
-    private String file;
-
-    @Temporal(TemporalType.DATE)
-    private Date date;
+    private String type;
 
     @ManyToOne
-    @JoinColumn(name = "workflow")
-    private Workflow workflow;
-
+    @JoinColumn(name = "wfl_config",insertable=false, updatable=false)
+    private Wfl_config wfl_config;
 }

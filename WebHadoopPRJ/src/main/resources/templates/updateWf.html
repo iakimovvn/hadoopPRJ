@@ -24,7 +24,7 @@
     <form class="form-horizontal" th:object="${workflow}" th:action="@{/workflow}" method="post">
 
         <input th:field="*{title}" class="m-3 form-check-label justify-content-start">
-        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{uuid}">
         <input type="hidden" th:field="*{version}">
         <input type="hidden" th:field="*{create_date}">
         <input type="hidden" th:field="*{last_run_date}">
@@ -33,16 +33,16 @@
 
 
         <select th:field="*{wfl_type}">
-            <option th:text="*{wfl_type.title}" th:value="*{wfl_type.id}">Type</option>
+            <option th:text="*{wfl_type.title}" th:value="*{wfl_type.uuid}">Type</option>
             <option th:each="type : ${types}"
-                    th:value="${type.id}"
+                    th:value="${type.uuid}"
                     th:text="${type.title}">type</option>
         </select>
 
 
         <div>
             <h3>Configuration data</h3>
-            <input type="hidden" th:field="*{wfl_config.id}">
+            <input type="hidden" th:field="*{wfl_config.uuid}">
             <input type="hidden" th:field="*{wfl_config.version}">
             <table class="table table-striped">
                 <tr>
@@ -53,19 +53,19 @@
                 <tr>
                     <td>
                         <div th:each="dir, stat : *{wfl_config.wfl_directories_from}">
-                            <input type="hidden" th:field="*{wfl_config.wfl_directories_from[__${stat.index}__].id}">
+                            <input type="hidden" th:field="*{wfl_config.wfl_directories_from[__${stat.index}__].uuid}">
                             <input type="hidden" th:field="*{wfl_config.wfl_directories_from[__${stat.index}__].version}">
                             <input  th:field="*{wfl_config.wfl_directories_from[__${stat.index}__].path}" class="form-check-label justify-content-start">
                         </div>
                     </td>
                     <td>
-                        <input type="hidden" th:field="*{wfl_config.wfl_directory_to.id}">
+                        <input type="hidden" th:field="*{wfl_config.wfl_directory_to.uuid}">
                         <input type="hidden" th:field="*{wfl_config.wfl_directory_to.version}">
                         <input  th:field="*{wfl_config.wfl_directory_to.path}" class="form-check-label justify-content-start">
                     </td>
                     <td>
                         <div th:each="partitionCol, stat : *{wfl_config.partitions}" class="d-inline">
-                            <input type="hidden" th:field="*{wfl_config.partitions[__${stat.index}__].id}">
+                            <input type="hidden" th:field="*{wfl_config.partitions[__${stat.index}__].uuid}">
                             <input type="hidden" th:field="*{wfl_config.partitions[__${stat.index}__].version}">
                             <input  th:field="*{wfl_config.partitions[__${stat.index}__].name}" class="form-check-label justify-content-start">
                             <input  th:field="*{wfl_config.partitions[__${stat.index}__].type}" class="form-check-label justify-content-start">
@@ -89,9 +89,9 @@
                         <th class="col-lg-2">password</th>
                     </tr>
                     <tr th:each="table, stat : *{wfl_config.wfl_tables}" class="d-flex">
-                        <input type="hidden" th:field="*{wfl_config.wfl_tables[__${stat.index}__].id}">
+                        <input type="hidden" th:field="*{wfl_config.wfl_tables[__${stat.index}__].uuid}">
                         <input type="hidden" th:field="*{wfl_config.wfl_tables[__${stat.index}__].version}">
-                        <input type="hidden" th:field="*{wfl_config.wfl_tables[__${stat.index}__].w_database.id}">
+                        <input type="hidden" th:field="*{wfl_config.wfl_tables[__${stat.index}__].w_database.uuid}">
                         <input type="hidden" th:field="*{wfl_config.wfl_tables[__${stat.index}__].w_database.version}">
 
                         <td class="col-lg-2">
@@ -99,7 +99,7 @@
                         </td>
                         <td th:each="prim, statPrim : *{wfl_config.wfl_tables[__${stat.index}__].primaries}" class="col-lg-2">
                             <div class="d-inline">
-                                <input type="hidden" th:field="*{wfl_config.wfl_tables[__${stat.index}__].primaries[__${statPrim.index}__].id}">
+                                <input type="hidden" th:field="*{wfl_config.wfl_tables[__${stat.index}__].primaries[__${statPrim.index}__].uuid}">
                                 <input type="hidden" th:field="*{wfl_config.wfl_tables[__${stat.index}__].primaries[__${statPrim.index}__].version}">
                                 <input  th:field="*{wfl_config.wfl_tables[__${stat.index}__].primaries[__${statPrim.index}__].name}" class="form-check-label justify-content-start w-25">
                                 <input  th:field="*{wfl_config.wfl_tables[__${stat.index}__].primaries[__${statPrim.index}__].type}" class="form-check-label justify-content-start w-25">

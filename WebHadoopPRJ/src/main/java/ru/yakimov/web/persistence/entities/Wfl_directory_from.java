@@ -4,6 +4,8 @@ import lombok.*;
 import ru.yakimov.web.persistence.entities.utils.PersistableEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  * Created by IntelliJ Idea.
@@ -11,13 +13,18 @@ import javax.persistence.Entity;
  * E-mail: yakimovvn@bk.ru
  */
 
-@Data
+@Getter
+@Setter
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Wfl_directory  extends PersistableEntity {
+public class Wfl_directory_from extends PersistableEntity {
 
     private String path;
+
+    @ManyToOne
+    @JoinColumn(name = "wfl_config",insertable=false, updatable=false)
+    private Wfl_config wfl_config;
 }

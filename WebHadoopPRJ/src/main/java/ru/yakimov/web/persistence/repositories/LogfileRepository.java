@@ -19,14 +19,14 @@ public interface LogfileRepository extends JpaRepository<Wfl_logfile, UUID> {
 
     @Query(
             value = "SELECT wfl_logfile.file FROM wfl_logfile " +
-                    "INNER JOIN workflow w on wfl_logfile.workflow_id = w.id " +
-                    "WHERE w.id = :id " +
+                    "INNER JOIN workflow w on wfl_logfile.workflow = w.uuid " +
+                    "WHERE w.uuid = :uuid " +
                     "ORDER BY (wfl_logfile.date) " +
                     "limit 1",
 
             nativeQuery = true
     )
-    String obtainLogfilePathByWorkflowId(@Param("id") UUID id);
+    String obtainLogfilePathByWorkflowId(@Param("uuid") UUID uuid);
 
     List<Wfl_logfile> findAllByWorkflow(Workflow workflow);
 }

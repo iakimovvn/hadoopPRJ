@@ -79,8 +79,8 @@ public class WorkflowService {
         return entityManager.createQuery(criteriaQuery).getResultList();
     }
 
-    public Workflow getById(UUID uuid){
-        return workflowRepository.getById(uuid);
+    public Workflow getByUuid(UUID uuid){
+        return workflowRepository.getByUuid(uuid);
     }
 
     public Workflow save(Workflow workflow){

@@ -1,6 +1,7 @@
 package ru.yakimov.web.persistence.entities;
 
 import lombok.*;
+import org.springframework.stereotype.Service;
 import ru.yakimov.web.persistence.entities.utils.PersistableEntity;
 
 import javax.persistence.*;
@@ -14,8 +15,8 @@ import java.util.Set;
  * User: Якимов В.Н.
  * E-mail: yakimovvn@bk.ru
  */
-
-@Data
+@Getter
+@Setter
 @Entity
 @Builder
 @NoArgsConstructor
@@ -25,13 +26,15 @@ public class Wfl_table extends PersistableEntity {
 
     private String name;
 
-    @ManyToMany
-    @JoinTable(name="wfl_table_primaries", joinColumns=
-    @JoinColumn(name="wfl_table", referencedColumnName="id"), inverseJoinColumns=
-    @JoinColumn(name="wfl_column", referencedColumnName="id"))
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "wfl_table")
     private List<Wfl_column> primaries = new ArrayList<>();
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "database")
     private Wfl_database w_database;
+
+    @ManyToOne
+    @JoinColumn(name = "wfl_config",insertable=false, updatable=false)
+    private Wfl_config wfl_config;
 }

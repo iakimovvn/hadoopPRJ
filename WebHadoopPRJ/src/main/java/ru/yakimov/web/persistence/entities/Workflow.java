@@ -29,7 +29,7 @@ public class Workflow extends PersistableEntity {
     @Temporal(TemporalType.DATE)
     private Date last_run_date;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "wfl_type")
     private Wfl_type wfl_type;
 

@@ -64,7 +64,7 @@ public class WorkflowController {
 
     @GetMapping(value = "/{uuid}")
     public String show(@PathVariable("uuid")UUID uuid, Model model){
-        Workflow workflow = workflowService.getById(uuid);
+        Workflow workflow = workflowService.getByUuid(uuid);
         model.addAttribute("workflow", workflow);
         model.addAttribute("logsList", logfileService.findAllByWorkflow(workflow) );
         return "showWf";
@@ -72,11 +72,11 @@ public class WorkflowController {
 
     @GetMapping(value = "/edit/{uuid}")
     public String update(@PathVariable("uuid")UUID uuid, Model model){
-        Workflow workflow = workflowService.getById(uuid);
-        model.addAttribute("workflow",  workflowService.getById(uuid));
+        Workflow workflow = workflowService.getByUuid(uuid);
+        model.addAttribute("workflow",  workflowService.getByUuid(uuid));
         List<Wfl_type> types = typeService.findAll()
                 .stream()
-                .filter(v -> !v.getId().equals(workflow.getWfl_type().getId()))
+                .filter(v -> !v.getUuid().equals(workflow.getWfl_type().getUuid()))
                 .collect(Collectors.toList());
         model.addAttribute("types", types);
         return "updateWf";
@@ -84,11 +84,11 @@ public class WorkflowController {
 
     @PostMapping
     public String saveWorkflow(@Valid Workflow workflow) {
-        Wfl_config config = workflow.getWfl_config();
-        directoryService.save(config.getWfl_directory_to());
-        directoryService.saveAll(config.getWfl_directories_from());
+//        Wfl_config config = workflow.getWfl_config();
+//        directoryService.save(config.getWfl_directory_to());
+//        directoryService.saveAll(config.getWfl_directories_from());
 //        configService.save(workflow.getWfl_config());
         workflow = workflowService.save(workflow);
-        return "redirect:/workflow/" + workflow.getId();
+        return "redirect:/workflow/" + workflow.getUuid();
     }
 }

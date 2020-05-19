@@ -3,8 +3,7 @@ package ru.yakimov.web.persistence.entities;
 import lombok.*;
 import ru.yakimov.web.persistence.entities.utils.PersistableEntity;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Entity;
 
 /**
  * Created by IntelliJ Idea.
@@ -18,15 +17,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Wfl_logfile extends PersistableEntity {
+public class Wfl_directory_to extends PersistableEntity {
 
-    private String file;
-
-    @Temporal(TemporalType.DATE)
-    private Date date;
-
-    @ManyToOne
-    @JoinColumn(name = "workflow")
-    private Workflow workflow;
+    private String path;
 
 }
