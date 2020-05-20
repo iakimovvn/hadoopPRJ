@@ -1,6 +1,6 @@
 spring:
   application:
-    name: config-server-hadoop
+    name: config-server
   cloud:
     config:
       server:

@@ -18,3 +18,14 @@ spring:
     cache: false
   flyway:
     locations: classpath:/db/migration
+  rabbitmq:
+    host: home.yakimovvn.ru
+    port: 5672
+    username: test
+    password: test
+
+hadoopprj:
+  rabbitmq:
+    exchange:   hadoop-prj.exchange
+    routingkey: hadoop.prj
+    queue:      hadoop-prj.queue

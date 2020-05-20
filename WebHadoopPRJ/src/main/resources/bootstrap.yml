@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: hadoopPRJ
+  cloud:
+    config:
+      url: localhost:8888
+    profiles:
+      active: production
