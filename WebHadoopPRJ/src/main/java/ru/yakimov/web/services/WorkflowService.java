@@ -4,7 +4,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.yakimov.web.persistence.entities.*;
+import ru.yakimov.web.persistence.pojo.ColumnPojo;
+import ru.yakimov.web.persistence.pojo.TablePojo;
+import ru.yakimov.web.persistence.pojo.WorkflowPojo;
 import ru.yakimov.web.persistence.repositories.WorkflowRepository;
+import sun.jvm.hotspot.ui.tree.CStringTreeNodeAdapter;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Created by IntelliJ Idea.
@@ -130,5 +135,79 @@ public class WorkflowService {
                 .wfl_config(config)
                 .build();
 
+    }
+
+
+    public WorkflowPojo workflowToPojo(Workflow workflow){
+
+        return WorkflowPojo.builder()
+                .uuid(workflow.getUuid().toString())
+                .title(workflow.getTitle())
+                .fromPaths(workflow
+                        .getWfl_config()
+                        .getWfl_directories_from()
+                        .stream()
+                                .map(Wfl_directory_from::getPath)
+                                .collect(Collectors.toList())
+                ).toPath(workflow
+                        .getWfl_config()
+                        .getWfl_directory_to()
+                        .getPath()
+                ).tables(
+                        workflow
+                                .getWfl_config()
+                                .getWfl_tables()
+                                .stream()
+                                .map(this::wfl_tableToPojo)
+                                .collect(Collectors.toList())
+                ).partitions(
+                        workflow
+                                .getWfl_config()
+                                .getPartitions()
+                                .stream()
+                                .map(this::partitionsToPojo)
+                        .collect(Collectors.toList())
+                ).build();
+
+    }
+
+
+
+    private TablePojo wfl_tableToPojo(Wfl_table wfl_table){
+        return TablePojo.builder()
+                .name(wfl_table.getName())
+                .primaries(
+                        wfl_table.getPrimaries()
+                                .stream()
+                                .map(this::columnToPojo)
+                                .collect(Collectors.toList())
+                ).databaseUrl(
+                        wfl_table
+                        .getW_database()
+                        .getUrl()
+                ).username(
+                        wfl_table
+                                .getW_database()
+                                .getUsername()
+                ).password(
+                        wfl_table
+                                .getW_database()
+                                .getPassword()
+                ).build();
+    }
+
+
+    private ColumnPojo partitionsToPojo(Wfl_partition partition){
+        return ColumnPojo.builder()
+                .name(partition.getName())
+                .type(partition.getType())
+                .build();
+    }
+
+    private ColumnPojo columnToPojo(Wfl_column column){
+        return ColumnPojo.builder()
+                .name(column.getName())
+                .type(column.getType())
+                .build();
     }
 }

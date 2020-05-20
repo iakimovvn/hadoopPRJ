@@ -1,6 +1,8 @@
 package ru.yakimov.web.controllers;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.jdbc.Work;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
  * E-mail: yakimovvn@bk.ru
  */
 
+@Slf4j
 @Controller
 @RequestMapping(value = "/workflow")
 @RequiredArgsConstructor
@@ -120,8 +123,11 @@ public class WorkflowController {
     @GetMapping (value = "/run/{uuid}")
     public String run(@PathVariable("uuid")UUID uuid){
         Workflow workflow = workflowService.getByUuid(uuid);
+        String workflowPojoJson = jsonConverter.objectToJsonString(
+                workflowService.workflowToPojo(workflow)
+        );
 
-        template.convertAndSend("hadoop-prj.exchange","hadoop.prj", workflow.getTitle());
+        template.convertAndSend("hadoop-prj.exchange","hadoop.prj", workflowPojoJson);
         return "redirect:/workflow";
 
     }

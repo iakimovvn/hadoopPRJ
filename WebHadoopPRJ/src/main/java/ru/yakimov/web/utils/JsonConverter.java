@@ -22,7 +22,6 @@ public class JsonConverter {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-
         return json;
     }
 }
