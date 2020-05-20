@@ -21,7 +21,7 @@
     <nav th:replace="~{fragments/header :: header(Workflows)}">Header</nav>
 </header>
 <main role="main" class="container">
-    <div class="text-left" th:if="${not #lists.isEmpty(workflows)}">
+    <div class="text-left" >
 
         <form class="form-inline mt-2 p-1 border-1 d-flex justify-content-between" th:action="@{/workflow}" method="get">
 
@@ -52,8 +52,12 @@
 
             <button type="submit" class="btn btn-secondary">Select</button>
         </form>
+        <div class="m-3">
+                <h1 class="m-3 d-inline">Workflows</h1>
+                <a class="badge badge-warning ml-4 d-inline" th:href="@{'workflow/new'}">+ new Workflow</a>
+        </div>
 
-        <h1 class="m-3">Workflows</h1>
+
 
         <div class="lead">
             <table class="table table-striped">

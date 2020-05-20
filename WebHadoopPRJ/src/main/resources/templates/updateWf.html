@@ -33,7 +33,7 @@
 
 
         <select th:field="*{wfl_type}">
-            <option th:text="*{wfl_type.title}" th:value="*{wfl_type.uuid}">Type</option>
+            <option th:if="*{wfl_type!=null}" th:text="*{wfl_type.title}" th:value="*{wfl_type.uuid}">Type</option>
             <option th:each="type : ${types}"
                     th:value="${type.uuid}"
                     th:text="${type.title}">type</option>

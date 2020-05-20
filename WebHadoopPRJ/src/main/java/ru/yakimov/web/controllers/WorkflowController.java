@@ -1,17 +1,17 @@
 package ru.yakimov.web.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.jdbc.Work;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.yakimov.web.persistence.entities.Wfl_config;
-import ru.yakimov.web.persistence.entities.Wfl_type;
-import ru.yakimov.web.persistence.entities.Workflow;
+import ru.yakimov.web.persistence.entities.*;
 import ru.yakimov.web.persistence.repositories.UserRepository;
 import ru.yakimov.web.services.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -54,7 +54,8 @@ public class WorkflowController {
                 lastRunFrom,
                 lastDateTo,
                 title,
-                type
+                type,
+                false
                 )
         );
         model.addAttribute("types", typeService.findAll());
@@ -82,13 +83,33 @@ public class WorkflowController {
         return "updateWf";
     }
 
+    @GetMapping(value = "/delete/{uuid}")
+    public String delete(@PathVariable("uuid")UUID uuid){
+        Workflow workflow = workflowService.getByUuid(uuid);
+        workflow.setDeleted(true);
+        workflowService.save(workflow);
+        return "redirect:/workflow";
+
+    }
+
     @PostMapping
     public String saveWorkflow(@Valid Workflow workflow) {
-//        Wfl_config config = workflow.getWfl_config();
-//        directoryService.save(config.getWfl_directory_to());
-//        directoryService.saveAll(config.getWfl_directories_from());
-//        configService.save(workflow.getWfl_config());
         workflow = workflowService.save(workflow);
         return "redirect:/workflow/" + workflow.getUuid();
+    }
+
+
+    @GetMapping("/new")
+    public String newWorkflow(Model model, Principal principal){
+
+        model.addAttribute("workflow",
+                workflowService.getCleanWorkflow(
+                        userRepository.findOneByLogin(
+                                principal.getName())
+                )
+        );
+        model.addAttribute("types", typeService.findAll());
+
+        return "updateWf";
     }
 }
