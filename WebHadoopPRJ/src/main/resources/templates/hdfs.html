@@ -21,13 +21,23 @@
     <nav th:replace="~{fragments/header :: header(HDFS)}">Header</nav>
 </header>
 <main role="main" class="container">
+    <div class="lead">
+        <table class="table table-striped">
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+            </tr>
+            <tr th:each="iteam : ${items}">
+                <td th:if="${iteam.isFolder}">
+                        <a th:href="${'/hdfs?path=' + iteam.path}">[[  ${iteam.name}  ]]</a>
+                </td>
+                <td th:unless="${iteam.isFolder}">[[  ${iteam.name}  ]]</td>
 
-
-
-
-
-
-
+                <td th:if="${iteam.isFolder}">FOLDER</a></td>
+                <td th:unless="${iteam.isFolder}">FILE</td>
+            </tr>
+        </table>
+    </div>
 </main>
 <footer>
     <div th:insert="~{fragments/footer :: footer}">&copy; 2020 Vladimir Yakimov</div>

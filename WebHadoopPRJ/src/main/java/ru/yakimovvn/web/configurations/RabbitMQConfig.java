@@ -31,8 +31,8 @@ public class RabbitMQConfig {
     private String username;
     private String password;
 
-    @Value("${hadoopprj.rabbitmq.exchange}")
-    private final String EXCHANGE;
+//    @Value("${hadoopprj.rabbitmq.exchange}")
+    private final String EXCHANGE = "hadoop-prj.exchange";
 
     @Bean
     public DirectExchange directExchange() {

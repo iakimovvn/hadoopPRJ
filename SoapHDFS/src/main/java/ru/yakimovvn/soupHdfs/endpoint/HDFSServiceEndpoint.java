@@ -3,6 +3,7 @@ package ru.yakimovvn.soupHdfs.endpoint;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
+import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 import ru.yakimovvn.soap.hdfs.GetHDFSRequest;
 import ru.yakimovvn.soap.hdfs.GetHDFSResponse;
 import ru.yakimovvn.soupHdfs.service.HDFSService;
@@ -27,6 +28,7 @@ public class HDFSServiceEndpoint {
     }
 
     @PayloadRoot(namespace = NAMESPACE, localPart = "getHDFSRequest")
+    @ResponsePayload
     public GetHDFSResponse getHDFSResponse(@RequestPayload final GetHDFSRequest request) throws IOException {
         GetHDFSResponse response = new GetHDFSResponse();
         response.getHdfsItems().addAll(hdfsService.getListFolder(request.getPath()));

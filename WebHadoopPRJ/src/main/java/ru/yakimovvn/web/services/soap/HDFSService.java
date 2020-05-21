@@ -31,7 +31,15 @@ public class HDFSService {
             response = null;
         }
 
+        if(response!= null){
+            response.getHdfsItems().forEach(v -> v.setPath(deleteHost(v.getPath())));
+        }
+
         return response == null ? new ArrayList<>() : response.getHdfsItems();
 
+    }
+
+    public String deleteHost(String str){
+        return str.split("8020")[1];
     }
 }
