@@ -31,8 +31,9 @@ public class RabbitMqService {
     private final RabbitTemplate rabbitTemplate;
 
     private final AmqpTemplate amqpTemplate;
-//    @Value("${hadoopprj.rabbitmq.exchange}")
-    private final String EXCHANGE = "hadoop-prj.exchange";
+
+    private final DirectExchange directExchange;
+
 
 
     @Bean
@@ -48,12 +49,10 @@ public class RabbitMqService {
 
     public void createQueueAndSend(WorkflowPojo workflowPojo, String queName)  throws AmqpException {
 
-        DirectExchange exchange = createExchange(EXCHANGE);
         String routingKey = "key." + queName;
-        addExchange(exchange);
         Queue queue = createQueue(queName);
         addQueue(queue);
-        addBinding(queue, exchange, routingKey);
+        addBinding(queue, directExchange, routingKey);
 
         sendQueueMessage(queName,workflowPojo);
     }
@@ -68,54 +67,22 @@ public class RabbitMqService {
 
     }
 
-    /**
-     * Send messages based on que and rout
-     * @param routingKey
-     * @param object
-     */
+
     public  void sendQueueMessage(String routingKey, WorkflowPojo object){
 
         rabbitTemplate.convertAndSend(routingKey,object);
     }
 
-    /**
-     * sent according to exhange and rout
-     * @param exchange
-     * @param routingKey
-     * @param object
-     */
     public  void sentExchangeMessage(String exchange, String routingKey, Object object){
 
         rabbitTemplate.convertAndSend(exchange,routingKey,object);
     }
 
-    /**
-     * Create Exchange
-     *
-     * @param exchange
-     */
-    private void addExchange(AbstractExchange exchange) {
-        rabbitAdmin.declareExchange(exchange);
-    }
-
-
-    /**
-     * Create a specified Queue
-     *
-     * @param queue
-     * @return queueName
-     */
     private String addQueue(Queue queue) {
         return rabbitAdmin.declareQueue(queue);
     }
 
-    /**
-     * Bind a queue to a matching switch using a routingKey
-     *
-     * @param queue
-     * @param exchange
-     * @param routingKey
-     */
+
     private void addBinding(Queue queue, DirectExchange exchange, String routingKey) {
         Binding binding = BindingBuilder.bind(queue).to(exchange).with(routingKey);
         rabbitAdmin.declareBinding(binding);
@@ -127,7 +94,4 @@ public class RabbitMqService {
     }
 
 
-    private DirectExchange createExchange(String exchangeName) {
-        return new DirectExchange(exchangeName, true, false);
-    }
 }

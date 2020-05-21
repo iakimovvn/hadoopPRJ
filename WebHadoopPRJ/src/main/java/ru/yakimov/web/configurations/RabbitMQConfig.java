@@ -2,6 +2,8 @@ package ru.yakimov.web.configurations;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -22,10 +24,19 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 public class RabbitMQConfig {
 
-    String host;
-    String port;
-    String username;
-    String password;
+    private String host;
+    private String port;
+    private String username;
+    private String password;
+
+//    @Value("${hadoopprj.rabbitmq.exchange}")
+    private final String EXCHANGE = "hadoop-prj.exchange";
+
+    @Bean
+    public DirectExchange directExchange() {
+        return new DirectExchange(EXCHANGE, true, false);
+    }
+
 
 
 
@@ -45,7 +56,9 @@ public class RabbitMQConfig {
     @Bean
     public RabbitAdmin rabbitAdmin( ) {
 
-        return new RabbitAdmin(mqConnectionFactory());
+        RabbitAdmin rabbitAdmin = new RabbitAdmin(mqConnectionFactory());
+        rabbitAdmin.declareExchange(directExchange());
+        return rabbitAdmin;
     }
 
 
