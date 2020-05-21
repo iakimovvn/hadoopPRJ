@@ -1,0 +1,32 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.yakimovvn.ru/HDFSService"
+	targetNamespace="http://www.yakimovvn.ru/HDFSService"
+	elementFormDefault="qualified">
+
+	<xs:element name="getHDFSRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="path" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="getHDFSResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="hdfsItems" type="tns:HDFSItem" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:complexType name="HDFSItem">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" />
+			<xs:element name="path" type="xs:string" />
+			<xs:element name="isFolder" type="xs:boolean" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+</xs:schema>

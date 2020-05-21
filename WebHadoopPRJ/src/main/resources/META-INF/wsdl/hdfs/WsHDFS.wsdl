@@ -22,7 +22,6 @@
 				<xs:sequence>
 					<xs:element name="name" type="xs:string" />
 					<xs:element name="path" type="xs:string" />
-					<xs:element name="country" type="xs:string" />
 					<xs:element name="isFolder" type="xs:boolean" />
 				</xs:sequence>
 			</xs:complexType>

@@ -3,7 +3,6 @@ package ru.yakimovvn.web.services;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.yakimov.web.persistence.entities.*;
 import ru.yakimovvn.web.persistence.entities.*;
 import ru.yakimovvn.web.persistence.pojo.ColumnPojo;
 import ru.yakimovvn.web.persistence.pojo.TablePojo;
