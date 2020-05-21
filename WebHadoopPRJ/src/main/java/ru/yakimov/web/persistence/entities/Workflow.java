@@ -44,5 +44,7 @@ public class Workflow extends PersistableEntity {
 
     private boolean deleted;
 
+    private boolean run;
+
 
 }

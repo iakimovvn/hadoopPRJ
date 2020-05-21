@@ -182,13 +182,15 @@ create table workflow
     wfl_user      uuid
         constraint FK_workflow_user
         references wfl_user,
-    deleted boolean default false
+    deleted boolean default false,
+    run boolean default false
+
 
 );
 
-insert into workflow (uuid, version, create_date, last_run_date, title, wfl_config, wfl_type, wfl_user,deleted) values ('b7fb3e6d-ea5f-481d-81ee-e9ad663afcb5', 0 , '2012-08-04', '2020-03-03', 'Table', '3658f925-2f59-4517-a047-64edbcb61fb9', 'bc76edae-bc3a-4e39-9964-389c02e953ea', 'fbe5a8e7-8555-4ee8-bff2-c572447e5f25', false);
-insert into workflow (uuid, version, create_date, last_run_date, title, wfl_config, wfl_type, wfl_user, deleted) values ('16531daf-76a7-47c2-ae6a-1bb45b034efd', 0 , '2000-08-04', '2001-03-03', 'Pork', '8a37c47c-e21c-4887-8ab0-b7cbe0d43b63', 'bc76edae-bc3a-4e39-9964-389c02e953ea', 'fbe5a8e7-8555-4ee8-bff2-c572447e5f25', false);
-insert into workflow (uuid, version, create_date, last_run_date, title, wfl_config, wfl_type, wfl_user, deleted) values ('a026ed4a-ce71-4610-93be-f66251ecc973', 0 , '2018-08-04', '2019-03-03', 'Cou for me', '78655856-d0c4-49bc-bde9-c8f9a3200a36', 'a9f72115-493d-406e-b73b-0e17a46b9a9d', 'fbe5a8e7-8555-4ee8-bff2-c572447e5f25', false);
+insert into workflow (uuid, version, create_date, last_run_date, title, wfl_config, wfl_type, wfl_user,deleted,run) values ('b7fb3e6d-ea5f-481d-81ee-e9ad663afcb5', 0 , '2012-08-04', '2020-03-03', 'Table', '3658f925-2f59-4517-a047-64edbcb61fb9', 'bc76edae-bc3a-4e39-9964-389c02e953ea', 'fbe5a8e7-8555-4ee8-bff2-c572447e5f25', false, false);
+insert into workflow (uuid, version, create_date, last_run_date, title, wfl_config, wfl_type, wfl_user, deleted,run) values ('16531daf-76a7-47c2-ae6a-1bb45b034efd', 0 , '2000-08-04', '2001-03-03', 'Pork', '8a37c47c-e21c-4887-8ab0-b7cbe0d43b63', 'bc76edae-bc3a-4e39-9964-389c02e953ea', 'fbe5a8e7-8555-4ee8-bff2-c572447e5f25', false, false);
+insert into workflow (uuid, version, create_date, last_run_date, title, wfl_config, wfl_type, wfl_user, deleted,run) values ('a026ed4a-ce71-4610-93be-f66251ecc973', 0 , '2018-08-04', '2019-03-03', 'Cou for me', '78655856-d0c4-49bc-bde9-c8f9a3200a36', 'a9f72115-493d-406e-b73b-0e17a46b9a9d', 'fbe5a8e7-8555-4ee8-bff2-c572447e5f25', false,false);
 
 
 DROP TABLE IF EXISTS wfl_logfile;

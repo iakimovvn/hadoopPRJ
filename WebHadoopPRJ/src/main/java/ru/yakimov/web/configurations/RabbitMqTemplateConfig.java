@@ -21,7 +21,6 @@ public class RabbitMqTemplateConfig {
 
     @Bean
     public AmqpTemplate amqpTemplate() {
-
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
         rabbitTemplate.setEncoding("UTF-8");
         rabbitTemplate.setMandatory(true);
