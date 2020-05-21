@@ -3,6 +3,7 @@ spring:
     name: hadoopprj
   cloud:
     config:
-      url: localhost:8888
+      url: http://localhost:8888
+      name: config-server
     profiles:
       active: production

@@ -2,13 +2,21 @@ plugins {
     id 'org.springframework.boot' version '2.2.5.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
+    id 'no.nils.wsdl2java' version '0.10'
 }
+
+
+apply plugin: 'no.nils.wsdl2java'
 
 configurations {
     compile.exclude module: "spring-boot-starter-tomcat"
     compileOnly {
         extendsFrom annotationProcessor
     }
+}
+
+ext {
+    set('springCloudVersion', "Hoxton.SR3")
 }
 
 repositories {
@@ -21,6 +29,7 @@ dependencies {
     compileOnly 'org.springframework.boot:spring-boot-devtools'
 
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -38,9 +47,6 @@ dependencies {
     compile group: 'org.webjars.npm', name: 'popper.js', version: '1.12.9'
     compile group: 'org.webjars', name: 'jquery', version: '3.2.1'
 
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.0'
-
-
     testImplementation 'com.h2database:h2:1.4.197'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
@@ -49,9 +55,28 @@ dependencies {
 
 }
 
+wsdl2javaExt {
+    cxfVersion = "3.1.10"
+}
+
+wsdl2java{
+    generatedWsdlDir = file("${projectDir}/src/main/script_generated")
+    wsdlDir=file("${projectDir}/src/main/resources/META-INF/wsdl/")
+    wsdlsToGenerate = [
+            [ file("${projectDir}/src/main/resources/META-INF/wsdl/hdfs/WsHDFS.wsdl") ]
+    ]
+}
+
+compileJava.dependsOn wsdl2java
 
 
 test {
     useJUnitPlatform()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }
 
