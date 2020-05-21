@@ -201,7 +201,9 @@ create table wfl_logfile
     version     integer not null,
     date        date not null default now(),
     file        varchar(255),
-    workflow uuid not null
+    writing boolean default false,
+
+        workflow uuid not null
         constraint FK_logfile_workflow
             references workflow
             ON UPDATE CASCADE ON DELETE CASCADE

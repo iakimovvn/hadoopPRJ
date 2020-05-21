@@ -120,10 +120,15 @@ public class WorkflowController {
     public String run(@PathVariable("uuid")UUID uuid){
         Workflow workflow = workflowService.getByUuid(uuid);
 
+        Wfl_logfile newLog = logfileService.createNewLogfile(workflow);
+
         rabbitMqService.sendMessage(
-                workflowService.workflowToPojo(workflow),
+                workflowService.workflowToPojo(workflow, newLog.getUuid().toString()),
                 workflow.getWfl_type().getTitle()
         );
+
+        workflow.setRun(true);
+        workflowService.save(workflow);
 
        return "redirect:/workflow";
 

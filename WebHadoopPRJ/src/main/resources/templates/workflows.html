@@ -79,7 +79,14 @@
                     <td><a th:href="${ '/workflow/log/' + workflow.uuid}">Log</a></td>
                     <td><a th:href="${'/workflow/edit/' + workflow.uuid}">Edit</a></td>
                     <td><a class="btn btn-danger" th:href="${'/workflow/delete/' + workflow.uuid}">Delete</a></td>
-                    <td><a class="btn btn-outline-success" th:href="${'/workflow/run/' + workflow.uuid}">Run</a></td>
+                    <td>
+                        <div th:if="${workflow.run}">
+                            <p class="btn btn-secondary">Running</p>
+                        </div>
+                        <div th:unless="${workflow.run}">
+                            <a class="btn btn-outline-success" th:href="${'/workflow/run/' + workflow.uuid}">Run</a>
+                        </div>
+                    </td>
                 </tr>
             </table>
         </div>

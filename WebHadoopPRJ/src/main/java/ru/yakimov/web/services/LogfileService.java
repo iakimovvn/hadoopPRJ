@@ -7,6 +7,7 @@ import ru.yakimov.web.persistence.entities.Workflow;
 import ru.yakimov.web.persistence.repositories.LogfileRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,5 +25,16 @@ public class LogfileService {
 
     public List<Wfl_logfile> findAllByWorkflow(Workflow workflow){
         return logfileRepository.findAllByWorkflow(workflow);
+    }
+
+    public Wfl_logfile createNewLogfile(Workflow workflow){
+        Date date = new Date();
+        Wfl_logfile newLog = Wfl_logfile.builder()
+                .date(date)
+                .file(date.getTime()+ ".log")
+                .workflow(workflow)
+                .writing(false)
+                .build();
+        return logfileRepository.save(newLog);
     }
 }

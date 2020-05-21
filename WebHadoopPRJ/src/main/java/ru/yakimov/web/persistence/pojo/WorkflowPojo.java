@@ -17,6 +17,8 @@ public class WorkflowPojo {
 
     private String uuid;
 
+    private String logfileUUID;
+
     private String title;
 
     private List<String> fromPaths;

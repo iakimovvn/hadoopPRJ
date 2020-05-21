@@ -21,6 +21,7 @@ public interface LogfileRepository extends JpaRepository<Wfl_logfile, UUID> {
             value = "SELECT wfl_logfile.file FROM wfl_logfile " +
                     "INNER JOIN workflow w on wfl_logfile.workflow = w.uuid " +
                     "WHERE w.uuid = :uuid " +
+                    "AND wfl_logfile.writing = true " +
                     "ORDER BY (wfl_logfile.date) " +
                     "limit 1",
 

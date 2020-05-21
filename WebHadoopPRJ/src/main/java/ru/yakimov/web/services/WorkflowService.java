@@ -8,7 +8,6 @@ import ru.yakimov.web.persistence.pojo.ColumnPojo;
 import ru.yakimov.web.persistence.pojo.TablePojo;
 import ru.yakimov.web.persistence.pojo.WorkflowPojo;
 import ru.yakimov.web.persistence.repositories.WorkflowRepository;
-import sun.jvm.hotspot.ui.tree.CStringTreeNodeAdapter;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -138,10 +137,11 @@ public class WorkflowService {
     }
 
 
-    public WorkflowPojo workflowToPojo(Workflow workflow){
+    public WorkflowPojo workflowToPojo(Workflow workflow, String logfileUUisStr){
 
         return WorkflowPojo.builder()
                 .uuid(workflow.getUuid().toString())
+                .logfileUUID(logfileUUisStr)
                 .title(workflow.getTitle())
                 .fromPaths(workflow
                         .getWfl_config()

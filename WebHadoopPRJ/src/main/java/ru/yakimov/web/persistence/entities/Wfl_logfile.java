@@ -25,6 +25,8 @@ public class Wfl_logfile extends PersistableEntity {
     @Temporal(TemporalType.DATE)
     private Date date;
 
+    private boolean writing;
+
     @ManyToOne
     @JoinColumn(name = "workflow")
     private Workflow workflow;
