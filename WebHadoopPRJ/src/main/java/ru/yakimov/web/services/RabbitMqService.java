@@ -28,22 +28,9 @@ public class RabbitMqService {
 
     private final RabbitAdmin rabbitAdmin;
 
-    private final RabbitTemplate rabbitTemplate;
-
     private final AmqpTemplate amqpTemplate;
 
     private final DirectExchange directExchange;
-
-
-
-    @Bean
-    public AmqpTemplate amqpTemplate() {
-
-        rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
-        rabbitTemplate.setEncoding("UTF-8");
-        rabbitTemplate.setMandatory(true);
-        return rabbitTemplate;
-    }
 
 
 
@@ -70,12 +57,12 @@ public class RabbitMqService {
 
     public  void sendQueueMessage(String routingKey, WorkflowPojo object){
 
-        rabbitTemplate.convertAndSend(routingKey,object);
+        amqpTemplate.convertAndSend(routingKey,object);
     }
 
     public  void sentExchangeMessage(String exchange, String routingKey, Object object){
 
-        rabbitTemplate.convertAndSend(exchange,routingKey,object);
+        amqpTemplate.convertAndSend(exchange,routingKey,object);
     }
 
     private String addQueue(Queue queue) {

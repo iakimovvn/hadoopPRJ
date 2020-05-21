@@ -3,6 +3,7 @@ package ru.yakimov.web.configurations;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.amqp.core.DirectExchange;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Slf4j
 public class RabbitMQConfig {
+
 
     private String host;
     private String port;
@@ -60,6 +62,7 @@ public class RabbitMQConfig {
         rabbitAdmin.declareExchange(directExchange());
         return rabbitAdmin;
     }
+
 
 
 
