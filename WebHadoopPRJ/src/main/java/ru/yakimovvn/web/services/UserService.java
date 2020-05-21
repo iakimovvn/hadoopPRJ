@@ -64,4 +64,9 @@ public class UserService implements UserDetailsService {
         return userRepository.save(wfl_user);
     }
 
+
+    public String getHdfsFolderByLogin(String login){
+        return userRepository.obtainHDFSFolderByLogin(login);
+    }
+
 }
