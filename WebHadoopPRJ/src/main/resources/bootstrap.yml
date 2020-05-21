@@ -1,6 +1,6 @@
 spring:
   application:
-    name: hadoopPRJ
+    name: hadoopprj
   cloud:
     config:
       url: localhost:8888

@@ -1,21 +1,16 @@
 package ru.yakimov.web.controllers;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.jdbc.Work;
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.yakimov.web.persistence.entities.*;
 import ru.yakimov.web.persistence.repositories.UserRepository;
 import ru.yakimov.web.services.*;
-import ru.yakimov.web.utils.JsonConverter;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -39,8 +34,9 @@ public class WorkflowController {
     private final LogfileService logfileService;
     private final ConfigService configService;
     private final DirectoryService directoryService;
-    private final AmqpTemplate template;
-    private final JsonConverter jsonConverter;
+
+    private final RabbitMqService rabbitMqService;
+
 
 
     @GetMapping
@@ -123,12 +119,13 @@ public class WorkflowController {
     @GetMapping (value = "/run/{uuid}")
     public String run(@PathVariable("uuid")UUID uuid){
         Workflow workflow = workflowService.getByUuid(uuid);
-        String workflowPojoJson = jsonConverter.objectToJsonString(
-                workflowService.workflowToPojo(workflow)
+
+        rabbitMqService.sendMessage(
+                workflowService.workflowToPojo(workflow),
+                workflow.getWfl_type().getTitle()
         );
 
-        template.convertAndSend("hadoop-prj.exchange","hadoop.prj", workflowPojoJson);
-        return "redirect:/workflow";
+       return "redirect:/workflow";
 
     }
 }
