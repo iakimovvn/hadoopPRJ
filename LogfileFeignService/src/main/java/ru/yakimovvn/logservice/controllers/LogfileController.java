@@ -5,9 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.yakimovvn.logservice.services.LogfileService;
 
 import java.io.IOException;
@@ -26,9 +24,9 @@ public class LogfileController {
     public final LogfileService logfileService;
 
     @GetMapping("/logfile")
-    public ResponseEntity<byte[]> getLogfile() throws IOException {
+    public ResponseEntity<byte[]> getLogfile(@RequestParam String path) throws IOException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.TEXT_PLAIN);
-        return new ResponseEntity<>(logfileService.getLogFile(), headers, HttpStatus.OK);
+        return new ResponseEntity<>(logfileService.getLogFile(path), headers, HttpStatus.OK);
     }
 }

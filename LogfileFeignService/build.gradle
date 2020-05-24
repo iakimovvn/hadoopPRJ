@@ -14,12 +14,17 @@ configurations {
         extendsFrom annotationProcessor
     }
 }
+ext {
+    set('springCloudVersion', "Hoxton.SR3")
+}
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-undertow'
     compileOnly 'org.projectlombok:lombok'
@@ -31,4 +36,10 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }
