@@ -2,7 +2,6 @@ package ru.yakimovvn.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * Created by IntelliJ Idea.
@@ -10,7 +9,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * E-mail: yakimovvn@bk.ru
  */
 
-@EnableFeignClients
 @SpringBootApplication
 public class WebHadoopPRJ {
     public static void main(String[] args) {
