@@ -4,12 +4,12 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="/static/images/favicon.ico" th:href="@{/static/images/favicon.ico}">
+    <link rel="icon" href="/static/images/favicon.ico" th:href="@{/images/favicon.ico}">
     <link rel="stylesheet" href="../../public/css/bootstrap.min.css"
           th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css}">
-    <link rel="stylesheet" href="/static/css/general.css">
+    <link rel="stylesheet" href="/static/css/general.css" th:href="@{/css/general.css}">
 
-    <script type="text/javascript" th:src="@{/static/js/main.js}"></script>
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
 
     <script src="http://cdn.jsdelivr.net/webjars/jquery/3.2.1/jquery.min.js"
             th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
@@ -24,7 +24,7 @@
     <nav class="navbar navbar-expand-lg navbar-static-top navbar-dark bg-primary" th:fragment="header(activeTab)">
         <div class="container">
             <a class="navbar-brand" href="#" th:href="@{/}">
-                <img src="../../static/images/logo.jpg" th:src="@{/static/images/logo.jpg}" alt="Big data loader" class="img-thumbnail">
+                <img src="../../static/images/logo.jpg" th:src="@{/images/logo.jpg}" alt="Big data loader" class="img-thumbnail">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

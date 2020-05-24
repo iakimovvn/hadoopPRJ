@@ -1,7 +1,7 @@
 package ru.yakimovvn.web.controllers;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+//import io.swagger.annotations.Api;
+//import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping(value = "/workflow")
-@Api("Контноллер работы с рабочими процессами.")
+//@Api("Контноллер работы с рабочими процессами.")
 public class WorkflowController {
 
     private final WorkflowService workflowService;
@@ -46,7 +46,7 @@ public class WorkflowController {
 
 
     @GetMapping
-    @ApiOperation(value = "Отображение списака рабочих процессов юзера")
+//    @ApiOperation(value = "Отображение списака рабочих процессов юзера")
     public String list(
             Model model,
             Principal principal,
@@ -74,7 +74,7 @@ public class WorkflowController {
 
 
     @GetMapping(value = "/{uuid}")
-    @ApiOperation(value = "Отображение рабочего процесса")
+//    @ApiOperation(value = "Отображение рабочего процесса")
     public String show(@PathVariable("uuid")UUID uuid, Model model){
         Workflow workflow = workflowService.getByUuid(uuid);
         model.addAttribute("workflow", workflow);
@@ -83,7 +83,7 @@ public class WorkflowController {
     }
 
     @GetMapping(value = "/edit/{uuid}")
-    @ApiOperation(value = "Показать страницу редактирования процесса")
+//    @ApiOperation(value = "Показать страницу редактирования процесса")
     public String update(@PathVariable("uuid")UUID uuid, Model model){
         Workflow workflow = workflowService.getByUuid(uuid);
         model.addAttribute("workflow",  workflowService.getByUuid(uuid));
@@ -96,7 +96,7 @@ public class WorkflowController {
     }
 
     @GetMapping(value = "/delete/{uuid}")
-    @ApiOperation(value = "Удаление процесса")
+//    @ApiOperation(value = "Удаление процесса")
     public String delete(@PathVariable("uuid")UUID uuid){
         Workflow workflow = workflowService.getByUuid(uuid);
         workflow.setDeleted(true);
@@ -106,7 +106,7 @@ public class WorkflowController {
     }
 
     @PostMapping
-    @ApiOperation(value = "Сохраннеие  рабочего процесса")
+//    @ApiOperation(value = "Сохраннеие  рабочего процесса")
     public String saveWorkflow(@Valid Workflow workflow) {
         workflow = workflowService.save(workflow);
         return "redirect:/workflow/" + workflow.getUuid();
@@ -114,7 +114,7 @@ public class WorkflowController {
 
 
     @GetMapping("/new")
-    @ApiOperation(value = "Показать страницу создания нового процесса")
+//    @ApiOperation(value = "Показать страницу создания нового процесса")
     public String newWorkflow(Model model, Principal principal){
 
         model.addAttribute("workflow",
@@ -129,7 +129,7 @@ public class WorkflowController {
     }
 
     @GetMapping (value = "/run/{uuid}")
-    @ApiOperation(value = "Запуск рабочего процесса")
+//    @ApiOperation(value = "Запуск рабочего процесса")
     public String run(@PathVariable("uuid")UUID uuid){
         Workflow workflow = workflowService.getByUuid(uuid);
 
