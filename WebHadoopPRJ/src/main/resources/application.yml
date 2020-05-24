@@ -2,30 +2,3 @@ server:
   servlet:
     context-path: /
   port: 8080
-
-spring:
-  datasource:
-    url: jdbc:postgresql://home.yakimovvn.ru:5432/hadoopprj?useUnicode=true&characterEncoding=utf8
-    driver-class-name: org.postgresql.Driver
-    username: vladimir
-    password: Bhbyf>hnftdf2011
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
-    show-sql: false
-    hibernate:
-      ddl-auto: none
-  thymeleaf:
-    cache: false
-  flyway:
-    locations: classpath:/db/migration
-  rabbitmq:
-    host: home.yakimovvn.ru
-    port: 5672
-    username: test
-    password: test
-
-hadoopprj:
-  rabbitmq:
-    exchange:   hadoop-prj.exchange
-    routingkey: hadoop.prj
-    queue:      hadoop-prj.queue
