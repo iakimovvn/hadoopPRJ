@@ -45,11 +45,22 @@ public class HDFSService {
     }
 
 
-    public HDFSItem fileStatusToHDFSItem(FileStatus fileStatus){
+    public HDFSItem fileStatusToHDFSItem(FileStatus fileStatus) {
         HDFSItem item = new HDFSItem();
         item.setName(fileStatus.getPath().getName());
-        item.setPath(fileStatus.getPath().toString());
-        item.setIsFolder(fileStatus.isDirectory());
+
+        Path path = fileStatus.getPath();
+
+        item.setPath(path.toString());
+        item.setParent(path.getParent().toString());
+        item.setIsDir(fileStatus.isDirectory());
+        item.setLength(fileStatus.getLen());
+        item.setBlocksize(fileStatus.getBlockSize());
+        item.setModificationTime(fileStatus.getModificationTime());
+        item.setAccessTime(fileStatus.getAccessTime());
+        item.setPermission(fileStatus.getPermission().toString());
+        item.setOwner(fileStatus.getOwner());
+        item.setGroup(fileStatus.getGroup());
         return item;
     }
 }

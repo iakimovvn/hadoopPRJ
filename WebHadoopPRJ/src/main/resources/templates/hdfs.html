@@ -24,17 +24,33 @@
     <div class="lead">
         <table class="table table-striped">
             <tr>
-                <th>Name</th>
-                <th>Type</th>
+                <th>permission</th>
+                <th>owner</th>
+                <th>group</th>
+                <th>name</th>
+                <th>type</th>
+                <th>size</th>
+                <th>modification</th>
             </tr>
-            <tr th:each="iteam : ${items}">
-                <td th:if="${iteam.isFolder}">
-                        <a th:href="${'/hdfs?path=' + iteam.path}">[[  ${iteam.name}  ]]</a>
+            <tr th:if="${path.length() != 1}">
+                <td>
+                    <a th:href="${'/hdfs?path=' + @hdfsFormatter.rewriteToRoot(path)}">UP</a>
                 </td>
-                <td th:unless="${iteam.isFolder}">[[  ${iteam.name}  ]]</td>
+            </tr>
+            <tr th:each="item : ${items}">
+                <td>[[  ${item.permission}  ]]</td>
+                <td>[[  ${item.owner}  ]]</td>
+                <td>[[  ${item.group}  ]]</td>
 
-                <td th:if="${iteam.isFolder}">FOLDER</a></td>
-                <td th:unless="${iteam.isFolder}">FILE</td>
+                <td th:if="${item.isIsDir()}">
+                        <a th:href="${'/hdfs?path=' + item.path}">[[  ${item.name}  ]]</a>
+                </td>
+                <td th:unless="${item.isIsDir()}">[[  ${item.name}  ]]</td>
+
+                <td th:if="${item.isIsDir()}">FOLDER</a></td>
+                <td th:unless="${item.isIsDir()}">FILE</td>
+                <td>[[  ${@hdfsFormatter.sizeFormat(item.length)}  ]]</td>
+                <td>[[  ${@hdfsFormatter.dateLongFormat(item.modificationTime)}  ]]</td>
             </tr>
         </table>
     </div>

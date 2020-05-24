@@ -22,7 +22,15 @@
 				<xs:sequence>
 					<xs:element name="name" type="xs:string" />
 					<xs:element name="path" type="xs:string" />
-					<xs:element name="isFolder" type="xs:boolean" />
+					<xs:element name="parent" type="xs:string" />
+					<xs:element name="isDir" type="xs:boolean" />
+					<xs:element name="length" type="xs:long" />
+					<xs:element name="blocksize" type="xs:long" />
+					<xs:element name="modification_time" type="xs:long" />
+					<xs:element name="access_time" type="xs:long" />
+					<xs:element name="permission" type="xs:string" />
+					<xs:element name="owner" type="xs:string" />
+					<xs:element name="group" type="xs:string" />
 				</xs:sequence>
 			</xs:complexType>
 

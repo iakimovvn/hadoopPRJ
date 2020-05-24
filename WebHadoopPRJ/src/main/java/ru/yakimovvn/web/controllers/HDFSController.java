@@ -41,6 +41,7 @@ public class HDFSController {
             throw new Exception("Folder not user");
         }
 
+        model.addAttribute("path", path);
         model.addAttribute("items", hdfsService.listFolder(path));
 
         return "hdfs";
