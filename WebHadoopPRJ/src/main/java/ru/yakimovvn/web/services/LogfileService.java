@@ -35,12 +35,16 @@ public class LogfileService {
 
     public Wfl_logfile createNewLogfile(Workflow workflow){
         Date date = new Date();
+
+        String path =  "/" + date.getTime() + ".log";
+
         Wfl_logfile newLog = Wfl_logfile.builder()
                 .date(date)
-                .file(date.getTime()+ ".log")
+                .file(path)
                 .workflow(workflow)
                 .writing(false)
                 .build();
+        createLog(workflow.getWfl_user().getLog_folder() + path);
         return logfileRepository.save(newLog);
     }
 
@@ -54,5 +58,13 @@ public class LogfileService {
         }
 
         return new String(logBytes);
+    }
+
+
+    public boolean createLog(String path){
+        String result = logFeignClient.createLog(path).getBody();
+        if (result == null)
+            return false;
+        return result.equals("successfully");
     }
 }

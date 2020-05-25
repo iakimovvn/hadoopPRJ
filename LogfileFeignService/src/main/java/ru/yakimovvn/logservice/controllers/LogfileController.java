@@ -24,10 +24,17 @@ public class LogfileController {
 
     public final LogfileService logfileService;
 
-    @GetMapping ("/logfile")
-    public ResponseEntity<byte[]> getLogfile(@RequestParam String path) throws IOException {
+    @GetMapping ("/get")
+    public ResponseEntity<byte[]> getLog(@RequestParam String path) throws IOException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.TEXT_PLAIN);
         return new ResponseEntity<>(logfileService.getLogFile(path), headers, HttpStatus.OK);
+    }
+
+    @GetMapping ("/create")
+    public ResponseEntity<String> createLog(@RequestParam String path){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.TEXT_PLAIN);
+        return new ResponseEntity<>(logfileService.createLog(path), headers, HttpStatus.OK);
     }
 }

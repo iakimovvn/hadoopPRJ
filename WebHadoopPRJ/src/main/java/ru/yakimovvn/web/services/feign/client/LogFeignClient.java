@@ -17,8 +17,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface LogFeignClient {
 
 
-    @GetMapping(value = "/logfile?path={path}")
+    @GetMapping(value = "/get?path={path}")
     ResponseEntity<byte[]> getLog(@PathVariable String path);
+
+    @GetMapping(value = "/create?path={path}")
+    ResponseEntity<String> createLog(@PathVariable String path);
+
+
+
 
 
 }
