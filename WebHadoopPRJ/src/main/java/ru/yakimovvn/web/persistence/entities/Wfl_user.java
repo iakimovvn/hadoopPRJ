@@ -31,6 +31,8 @@ public class Wfl_user extends PersistableEntity {
 
     private String hdfs_folder;
 
+    private String log_folder;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 

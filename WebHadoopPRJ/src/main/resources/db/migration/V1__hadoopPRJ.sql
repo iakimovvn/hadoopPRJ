@@ -155,13 +155,14 @@ create table wfl_user
     phone      varchar(255),
     email      varchar(255) UNIQUE NOT NULL,
     hdfs_folder  varchar(255) NOT NULL,
+    log_folder varchar(255) NOT NULL,
     role       varchar(255) NOT NULL
 );
 
 
-INSERT INTO wfl_user (uuid, version,login ,phone, password, email, first_name, last_name,hdfs_folder, role) VALUES ('6b718067-e1e4-4202-a7e2-7339ea0d6cb4', 0,'anonymous','anonymous', 'anonymous', 'anonymous@supershop.com', 'anonymous', 'anonymous','/anonymous', 'ROLE_CUSTOMER');
-INSERT INTO wfl_user (uuid, version,login,  phone, password, email, first_name, last_name, hdfs_folder,role) VALUES ('fbe5a8e7-8555-4ee8-bff2-c572447e5f25', 0,'11111111','11111111', '$2a$10$5rAOMKmVsh9.NlzXTLLbq.XwouGdg3dwohvb5/HDn692YfdrLthO2', 'admin@supershop.com', 'Admin', 'Admin','/','ROLE_ADMIN');
-INSERT INTO wfl_user (uuid, version,login, phone, password, email, first_name, last_name, hdfs_folder,role) VALUES ('04c8bd30-ba4e-4e82-b996-db907e37a2c6', 0,'22222222','22222222', '$2a$10$5rAOMKmVsh9.NlzXTLLbq.XwouGdg3dwohvb5/HDn692YfdrLthO2', 'user@supershop.com', 'User', 'User','/', 'ROLE_ADMIN');
+INSERT INTO wfl_user (uuid, version,login ,phone, password, email, first_name, last_name,hdfs_folder, log_folder, role) VALUES ('6b718067-e1e4-4202-a7e2-7339ea0d6cb4', 0,'anonymous','anonymous', 'anonymous', 'anonymous@supershop.com', 'anonymous', 'anonymous','/anonymous', '/anonymous','ROLE_CUSTOMER');
+INSERT INTO wfl_user (uuid, version,login,  phone, password, email, first_name, last_name, hdfs_folder,log_folder,role) VALUES ('fbe5a8e7-8555-4ee8-bff2-c572447e5f25', 0,'11111111','11111111', '$2a$10$5rAOMKmVsh9.NlzXTLLbq.XwouGdg3dwohvb5/HDn692YfdrLthO2', 'admin@supershop.com', 'Admin', 'Admin','/','/11111111', 'ROLE_ADMIN');
+INSERT INTO wfl_user (uuid, version,login, phone, password, email, first_name, last_name, hdfs_folder,log_folder, role) VALUES ('04c8bd30-ba4e-4e82-b996-db907e37a2c6', 0,'22222222','22222222', '$2a$10$5rAOMKmVsh9.NlzXTLLbq.XwouGdg3dwohvb5/HDn692YfdrLthO2', 'user@supershop.com', 'User', 'User','/', '22222222','ROLE_ADMIN');
 
 
 
@@ -210,7 +211,7 @@ create table wfl_logfile
             ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-insert into wfl_logfile (uuid, version, date, file, workflow) VALUES ('b72be988-776b-4084-9739-867f4f87cfb5', 0,'2018-12-12', 'folder.log', 'b7fb3e6d-ea5f-481d-81ee-e9ad663afcb5');
+insert into wfl_logfile (uuid, version, date, file, workflow) VALUES ('b72be988-776b-4084-9739-867f4f87cfb5', 0,'2018-12-12', '/logfile.log', 'b7fb3e6d-ea5f-481d-81ee-e9ad663afcb5');
 insert into wfl_logfile (uuid, version, date, file, workflow) VALUES ('804b3065-991b-4a60-94b8-b6bb6609df47', 0, '2020-12-12','folder1.log', '16531daf-76a7-47c2-ae6a-1bb45b034efd');
 insert into wfl_logfile (uuid, version, date, file, workflow) VALUES ('701c34a9-fc36-4fce-a4cc-e4a46eb57935', 0, '2020-11-03', 'folder2.log', 'a026ed4a-ce71-4610-93be-f66251ecc973');
 insert into wfl_logfile (uuid, version, date, file, workflow) VALUES ('17a89612-e590-4c9e-b08b-1c42b3a671d3', 0, '2020-11-12', 'folder3.log', 'a026ed4a-ce71-4610-93be-f66251ecc973');

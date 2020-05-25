@@ -97,10 +97,10 @@
             <table class="table col-5">
                 <tr th:each="logfile : ${logsList}">
                     <td>
-                        <a th:href="${ '/workflow/log/' + logfile.uuid}">[[  ${logfile.file}+': '+${logfile.date}  ]]</a>
+                        <a th:href="${ '/log?path=' + logfile.file +'&workflowUUID=' + workflow.uuid}">[[  ${logfile.file}+': '+${logfile.date}  ]]</a>
                     </td>
                     <td>
-                        <a class="btn btn-danger" th:href="${'/workflow/log/delete/' + logfile.uuid}">Delete</a>
+                        <a class="btn btn-danger" th:href="${'/log/delete/' + logfile.uuid}">Delete</a>
                     </td>
                 </tr>
             </table>

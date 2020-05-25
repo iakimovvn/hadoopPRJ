@@ -24,4 +24,12 @@ public interface UserRepository extends CrudRepository<Wfl_user, UUID> {
             nativeQuery = true
     )
     String obtainHDFSFolderByLogin(@Param("login")String login);
+
+    @Query(
+            value = "SELECT wfl_user.log_folder FROM wfl_user " +
+                    "WHERE login = :login",
+
+            nativeQuery = true
+    )
+    String obtainLogFolderByLogin(@Param("login")String login);
 }

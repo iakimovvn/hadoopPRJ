@@ -69,4 +69,9 @@ public class UserService implements UserDetailsService {
         return userRepository.obtainHDFSFolderByLogin(login);
     }
 
+    public String getLogFolderByLogin(String login){
+        return userRepository.obtainLogFolderByLogin(login);
+    }
+
+
 }
