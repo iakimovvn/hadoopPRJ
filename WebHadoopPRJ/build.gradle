@@ -56,9 +56,9 @@ dependencies {
 //    testImplementation 'org.testcontainers:postgresql:1.11.2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-//    implementation "io.springfox:springfox-bean-validators:${swaggerVersion}"
-//    implementation "io.springfox:springfox-swagger2:${swaggerVersion}"
-//    implementation "io.springfox:springfox-swagger-ui:${swaggerVersion}"
+    implementation "io.springfox:springfox-bean-validators:${swaggerVersion}"
+    implementation "io.springfox:springfox-swagger2:${swaggerVersion}"
+    implementation "io.springfox:springfox-swagger-ui:${swaggerVersion}"
 
     implementation "org.springframework.boot:spring-boot-starter-amqp"
 
