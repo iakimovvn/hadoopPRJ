@@ -15,15 +15,20 @@ import java.util.Locale;
 
 public class DateFormatter implements Formatter<Date> {
 
-    public static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
+    public static final SimpleDateFormat FORMATTER_DATATIME = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    public static final SimpleDateFormat FORMATTER_DATA = new SimpleDateFormat("yyyy-MM-dd");
+
 
     @Override
     public Date parse(String str, Locale locale) throws ParseException {
-        return FORMATTER.parse(str);
+        if(str.length() == 10)
+            return FORMATTER_DATA.parse(str);
+
+        return FORMATTER_DATATIME.parse(str);
     }
 
     @Override
     public String print(Date date, Locale locale) {
-        return FORMATTER.format(date);
+        return FORMATTER_DATATIME.format(date);
     }
 }

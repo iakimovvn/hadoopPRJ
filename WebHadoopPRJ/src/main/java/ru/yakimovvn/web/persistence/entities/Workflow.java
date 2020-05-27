@@ -4,6 +4,8 @@ import lombok.*;
 import ru.yakimovvn.web.persistence.entities.utils.PersistableEntity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -22,10 +24,10 @@ public class Workflow extends PersistableEntity {
 
     private String title;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date create_date;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date last_run_date;
 
     @ManyToOne
@@ -38,8 +40,8 @@ public class Workflow extends PersistableEntity {
     private Wfl_config wfl_config;
 
     @ManyToOne
-    @JoinColumn(name = "wfl_user")
-    private Wfl_user wfl_user;
+    @JoinColumn(name = "wf_user")
+    private User user;
 
     private boolean deleted;
 

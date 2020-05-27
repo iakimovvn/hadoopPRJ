@@ -3,19 +3,19 @@ package ru.yakimovvn.web.persistence.entities;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import ru.yakimovvn.web.persistence.entities.enums.Role;
 import ru.yakimovvn.web.persistence.entities.utils.PersistableEntity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
 @NoArgsConstructor
+@Table(name = "tbl_user")
 @EqualsAndHashCode(callSuper = true)
-public class Wfl_user extends PersistableEntity {
+public class User extends PersistableEntity {
 
     private String login;
 
@@ -33,7 +33,10 @@ public class Wfl_user extends PersistableEntity {
 
     private String log_folder;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @ManyToMany
+    @JoinTable(name="tbl_role_user", joinColumns=
+    @JoinColumn(name="user_uuid", referencedColumnName="uuid"), inverseJoinColumns=
+    @JoinColumn(name="role_uuid", referencedColumnName="uuid"))
+    private Set<Role> roles = new HashSet<>();
 
 }

@@ -140,6 +140,7 @@ public class WorkflowController {
                 workflow.getWfl_type().getTitle()
         );
 
+        workflow.setLast_run_date(new Date());
         workflow.setRun(true);
         workflowService.save(workflow);
 

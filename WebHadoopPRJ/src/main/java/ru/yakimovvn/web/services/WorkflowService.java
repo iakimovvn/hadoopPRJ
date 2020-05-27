@@ -15,6 +15,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +40,7 @@ public class WorkflowService {
     private final WorkflowRepository workflowRepository;
     private final TypeService typeService;
 
-    public List<Workflow> findAll(Wfl_user user, Date createDateFrom, Date createDateTo, Date lastRunFrom, Date lastDateTo, String title, String typeTitle, boolean isDelete){
+    public List<Workflow> findAll(User user, Date createDateFrom, Date createDateTo, Date lastRunFrom, Date lastDateTo, String title, String typeTitle, boolean isDelete){
 
         if(user == null) {
             return new ArrayList<>();
@@ -49,7 +51,7 @@ public class WorkflowService {
         Root<Workflow> root = criteriaQuery.from(Workflow.class);
         List<Predicate> predicates = new ArrayList<>();
 
-        predicates.add(criteriaBuilder.equal(root.get("wfl_user"), user));
+        predicates.add(criteriaBuilder.equal(root.get("user"), user));
 
         if(createDateFrom != null){
             predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("create_date"), createDateFrom));
@@ -84,7 +86,9 @@ public class WorkflowService {
         criteriaQuery.select(root);
         criteriaQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[]{})));
 
-        return entityManager.createQuery(criteriaQuery).getResultList();
+
+        List<Workflow> resultList = entityManager.createQuery(criteriaQuery).getResultList();
+        return resultList;
     }
 
     public Workflow getByUuid(UUID uuid){
@@ -96,7 +100,7 @@ public class WorkflowService {
     }
 
 
-    public Workflow getCleanWorkflow(Wfl_user wfl_user){
+    public Workflow getCleanWorkflow(User user){
 
 
         Wfl_table table = Wfl_table.builder()
@@ -128,8 +132,8 @@ public class WorkflowService {
 
        return Workflow.builder()
                 .title("")
-                .create_date(new Date())
-                .wfl_user(wfl_user)
+                .create_date(new Timestamp(System.currentTimeMillis()))
+                .user(user)
                 .deleted(false)
                 .wfl_config(config)
                 .build();

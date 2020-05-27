@@ -3,7 +3,7 @@ package ru.yakimovvn.web.persistence.repositories;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-import ru.yakimovvn.web.persistence.entities.Wfl_user;
+import ru.yakimovvn.web.persistence.entities.User;
 
 import java.util.UUID;
 
@@ -13,12 +13,12 @@ import java.util.UUID;
  * E-mail: yakimovvn@bk.ru
  */
 
-public interface UserRepository extends CrudRepository<Wfl_user, UUID> {
-    Wfl_user findOneByLogin(String login);
+public interface UserRepository extends CrudRepository<User, UUID> {
+    User findOneByLogin(String login);
     boolean existsByLogin(String login);
 
     @Query(
-            value = "SELECT wfl_user.hdfs_folder FROM wfl_user " +
+            value = "SELECT tbl_user.hdfs_folder FROM tbl_user " +
                     "WHERE login = :login",
 
             nativeQuery = true
@@ -26,7 +26,7 @@ public interface UserRepository extends CrudRepository<Wfl_user, UUID> {
     String obtainHDFSFolderByLogin(@Param("login")String login);
 
     @Query(
-            value = "SELECT wfl_user.log_folder FROM wfl_user " +
+            value = "SELECT tbl_user.log_folder FROM tbl_user " +
                     "WHERE login = :login",
 
             nativeQuery = true

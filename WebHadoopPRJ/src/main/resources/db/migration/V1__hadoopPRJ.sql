@@ -141,10 +141,22 @@ insert into wfl_directory_from (uuid, version, path, wfl_config) VALUES ('b68231
 insert into wfl_directory_from (uuid, version, path, wfl_config) VALUES ('d2e2ab32-6c84-4c04-b9cc-1d5ca8a0d50a',0, 'folderFromTwo','8a37c47c-e21c-4887-8ab0-b7cbe0d43b63');
 insert into wfl_directory_from (uuid, version, path, wfl_config) VALUES ('1f400e26-cfcc-44bb-8398-04c3635c2ae5',0, 'folderFromThree','78655856-d0c4-49bc-bde9-c8f9a3200a36');
 
+DROP TABLE IF EXISTS tbl_role;
 
-DROP TABLE IF EXISTS wfl_user;
+create table if not exists tbl_role
+(
+    uuid uuid DEFAULT uuid_generate_v4() UNIQUE NOT NULL CONSTRAINT  tbl_role_pkey primary key,
+    version    integer not null,
+    role varchar(255) not null
+);
 
-create table wfl_user
+insert into tbl_role (uuid, version, role) VALUES ('99566db4-106e-4db5-ba3b-d983b16e9704', 0, 'ROLE_CUSTOMER');
+insert into tbl_role (uuid, version, role) VALUES ('df45ab52-d9a8-4ed4-ba97-0f5194cab473', 0, 'ROLE_ADMIN');
+
+
+DROP TABLE IF EXISTS tbl_user;
+
+create table tbl_user
 (
     uuid uuid DEFAULT uuid_generate_v4() UNIQUE NOT NULL CONSTRAINT  wfl_user_pkey primary key,
     version    integer not null,
@@ -155,14 +167,29 @@ create table wfl_user
     phone      varchar(255),
     email      varchar(255) UNIQUE NOT NULL,
     hdfs_folder  varchar(255) NOT NULL,
-    log_folder varchar(255) NOT NULL,
-    role       varchar(255) NOT NULL
+    log_folder varchar(255) NOT NULL
 );
 
 
-INSERT INTO wfl_user (uuid, version,login ,phone, password, email, first_name, last_name,hdfs_folder, log_folder, role) VALUES ('6b718067-e1e4-4202-a7e2-7339ea0d6cb4', 0,'anonymous','anonymous', 'anonymous', 'anonymous@supershop.com', 'anonymous', 'anonymous','/anonymous', '/anonymous','ROLE_CUSTOMER');
-INSERT INTO wfl_user (uuid, version,login,  phone, password, email, first_name, last_name, hdfs_folder,log_folder,role) VALUES ('fbe5a8e7-8555-4ee8-bff2-c572447e5f25', 0,'11111111','11111111', '$2a$10$5rAOMKmVsh9.NlzXTLLbq.XwouGdg3dwohvb5/HDn692YfdrLthO2', 'admin@supershop.com', 'Admin', 'Admin','/','/11111111', 'ROLE_ADMIN');
-INSERT INTO wfl_user (uuid, version,login, phone, password, email, first_name, last_name, hdfs_folder,log_folder, role) VALUES ('04c8bd30-ba4e-4e82-b996-db907e37a2c6', 0,'22222222','22222222', '$2a$10$5rAOMKmVsh9.NlzXTLLbq.XwouGdg3dwohvb5/HDn692YfdrLthO2', 'user@supershop.com', 'User', 'User','/', '/22222222','ROLE_ADMIN');
+INSERT INTO tbl_user (uuid, version,login ,phone, password, email, first_name, last_name,hdfs_folder, log_folder) VALUES ('6b718067-e1e4-4202-a7e2-7339ea0d6cb4', 0,'anonymous','anonymous', 'anonymous', 'anonymous@supershop.com', 'anonymous', 'anonymous','/anonymous', '/anonymous');
+INSERT INTO tbl_user (uuid, version,login,  phone, password, email, first_name, last_name, hdfs_folder,log_folder) VALUES ('fbe5a8e7-8555-4ee8-bff2-c572447e5f25', 0,'11111111','11111111', '$2a$10$5rAOMKmVsh9.NlzXTLLbq.XwouGdg3dwohvb5/HDn692YfdrLthO2', 'admin@supershop.com', 'Admin', 'Admin','/','/11111111');
+INSERT INTO tbl_user (uuid, version,login, phone, password, email, first_name, last_name, hdfs_folder,log_folder) VALUES ('04c8bd30-ba4e-4e82-b996-db907e37a2c6', 0,'22222222','22222222', '$2a$10$5rAOMKmVsh9.NlzXTLLbq.XwouGdg3dwohvb5/HDn692YfdrLthO2', 'user@supershop.com', 'User', 'User','/', '/22222222');
+
+DROP TABLE IF EXISTS tbl_role_user;
+
+create table if not exists tbl_role_user
+(
+    role_uuid uuid not null
+        constraint tbl_role_user_tbl_role_id_role_fk
+            references tbl_role,
+    user_uuid uuid not null
+        constraint tbl_role_user_tbl_user_id_user_fk
+            references tbl_user
+);
+
+insert into tbl_role_user (role_uuid, user_uuid) VALUES ('99566db4-106e-4db5-ba3b-d983b16e9704','6b718067-e1e4-4202-a7e2-7339ea0d6cb4');
+insert into tbl_role_user (role_uuid, user_uuid) VALUES ('df45ab52-d9a8-4ed4-ba97-0f5194cab473','fbe5a8e7-8555-4ee8-bff2-c572447e5f25');
+insert into tbl_role_user (role_uuid, user_uuid) VALUES ('df45ab52-d9a8-4ed4-ba97-0f5194cab473','04c8bd30-ba4e-4e82-b996-db907e37a2c6');
 
 
 
@@ -172,8 +199,8 @@ create table workflow
 (
     uuid uuid DEFAULT uuid_generate_v4() UNIQUE NOT NULL CONSTRAINT workflow_pkey primary key,
     version       integer not null,
-    create_date   date,
-    last_run_date date,
+    create_date   timestamp not null default now(),
+    last_run_date timestamp,
     title         varchar(255),
     wfl_config    uuid
         constraint FK_workflow_config
@@ -181,18 +208,18 @@ create table workflow
     wfl_type      uuid
         constraint FK_workflow_type
             references wfl_type,
-    wfl_user      uuid
+    "wf_user"      uuid
         constraint FK_workflow_user
-        references wfl_user,
+        references tbl_user,
     deleted boolean default false,
     run boolean default false
 
 
 );
 
-insert into workflow (uuid, version, create_date, last_run_date, title, wfl_config, wfl_type, wfl_user,deleted,run) values ('b7fb3e6d-ea5f-481d-81ee-e9ad663afcb5', 0 , '2012-08-04', '2020-03-03', 'Table', '3658f925-2f59-4517-a047-64edbcb61fb9', 'bc76edae-bc3a-4e39-9964-389c02e953ea', 'fbe5a8e7-8555-4ee8-bff2-c572447e5f25', false, false);
-insert into workflow (uuid, version, create_date, last_run_date, title, wfl_config, wfl_type, wfl_user, deleted,run) values ('16531daf-76a7-47c2-ae6a-1bb45b034efd', 0 , '2000-08-04', '2001-03-03', 'Pork', '8a37c47c-e21c-4887-8ab0-b7cbe0d43b63', 'bc76edae-bc3a-4e39-9964-389c02e953ea', 'fbe5a8e7-8555-4ee8-bff2-c572447e5f25', false, false);
-insert into workflow (uuid, version, create_date, last_run_date, title, wfl_config, wfl_type, wfl_user, deleted,run) values ('a026ed4a-ce71-4610-93be-f66251ecc973', 0 , '2018-08-04', '2019-03-03', 'Cou for me', '78655856-d0c4-49bc-bde9-c8f9a3200a36', 'a9f72115-493d-406e-b73b-0e17a46b9a9d', 'fbe5a8e7-8555-4ee8-bff2-c572447e5f25', false,false);
+insert into workflow (uuid, version, create_date, last_run_date, title, wfl_config, wfl_type, "wf_user",deleted,run) values ('b7fb3e6d-ea5f-481d-81ee-e9ad663afcb5', 0 , '2012-08-04 01:00:00', '2020-03-03 00:00:00', 'Table', '3658f925-2f59-4517-a047-64edbcb61fb9', 'bc76edae-bc3a-4e39-9964-389c02e953ea', 'fbe5a8e7-8555-4ee8-bff2-c572447e5f25', false, false);
+insert into workflow (uuid, version, create_date, last_run_date, title, wfl_config, wfl_type, "wf_user", deleted,run) values ('16531daf-76a7-47c2-ae6a-1bb45b034efd', 0 , '2000-08-04 01:00:00', '2001-03-03 00:00:00', 'Pork', '8a37c47c-e21c-4887-8ab0-b7cbe0d43b63', 'bc76edae-bc3a-4e39-9964-389c02e953ea', 'fbe5a8e7-8555-4ee8-bff2-c572447e5f25', false, false);
+insert into workflow (uuid, version, create_date, last_run_date, title, wfl_config, wfl_type, "wf_user", deleted,run) values ('a026ed4a-ce71-4610-93be-f66251ecc973', 0 , '2018-08-04 01:00:00', '2019-03-03 00:00:00', 'Cou for me', '78655856-d0c4-49bc-bde9-c8f9a3200a36', 'a9f72115-493d-406e-b73b-0e17a46b9a9d', 'fbe5a8e7-8555-4ee8-bff2-c572447e5f25', false,false);
 
 
 DROP TABLE IF EXISTS wfl_logfile;
@@ -201,7 +228,7 @@ create table wfl_logfile
 (
     uuid uuid DEFAULT uuid_generate_v4() UNIQUE NOT NULL CONSTRAINT wfl_logfile_pkey primary key,
     version     integer not null,
-    date        date not null default now(),
+    date        timestamp not null default now(),
     file        varchar(255),
     writing boolean default false,
 
@@ -211,8 +238,8 @@ create table wfl_logfile
             ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-insert into wfl_logfile (uuid, version, date, file, workflow) VALUES ('b72be988-776b-4084-9739-867f4f87cfb5', 0,'2018-12-12', '/logfile.log', 'b7fb3e6d-ea5f-481d-81ee-e9ad663afcb5');
-insert into wfl_logfile (uuid, version, date, file, workflow) VALUES ('804b3065-991b-4a60-94b8-b6bb6609df47', 0, '2020-12-12','folder1.log', '16531daf-76a7-47c2-ae6a-1bb45b034efd');
-insert into wfl_logfile (uuid, version, date, file, workflow) VALUES ('701c34a9-fc36-4fce-a4cc-e4a46eb57935', 0, '2020-11-03', 'folder2.log', 'a026ed4a-ce71-4610-93be-f66251ecc973');
-insert into wfl_logfile (uuid, version, date, file, workflow) VALUES ('17a89612-e590-4c9e-b08b-1c42b3a671d3', 0, '2020-11-12', 'folder3.log', 'a026ed4a-ce71-4610-93be-f66251ecc973');
+insert into wfl_logfile (uuid, version, date, file, workflow) VALUES ('b72be988-776b-4084-9739-867f4f87cfb5', 0,'2018-12-12 00:00:00', '/logfile.log', 'b7fb3e6d-ea5f-481d-81ee-e9ad663afcb5');
+insert into wfl_logfile (uuid, version, date, file, workflow) VALUES ('804b3065-991b-4a60-94b8-b6bb6609df47', 0, '2020-12-12 00:00:00','folder1.log', '16531daf-76a7-47c2-ae6a-1bb45b034efd');
+insert into wfl_logfile (uuid, version, date, file, workflow) VALUES ('701c34a9-fc36-4fce-a4cc-e4a46eb57935', 0, '2020-11-03 00:00:00', 'folder2.log', 'a026ed4a-ce71-4610-93be-f66251ecc973');
+insert into wfl_logfile (uuid, version, date, file, workflow) VALUES ('17a89612-e590-4c9e-b08b-1c42b3a671d3', 0, '2020-11-12 00:00:00', 'folder3.log', 'a026ed4a-ce71-4610-93be-f66251ecc973');
 

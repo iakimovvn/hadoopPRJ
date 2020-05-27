@@ -44,7 +44,7 @@ public class LogfileService {
                 .workflow(workflow)
                 .writing(false)
                 .build();
-        createLog(workflow.getWfl_user().getLog_folder() + path);
+        createLog(workflow.getUser().getLog_folder() + path);
         return logfileRepository.save(newLog);
     }
 
