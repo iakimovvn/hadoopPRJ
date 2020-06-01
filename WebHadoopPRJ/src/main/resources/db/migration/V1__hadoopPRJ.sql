@@ -1,5 +1,7 @@
 CREATE SCHEMA IF NOT EXISTS public;
 
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 DROP TABLE IF EXISTS wfl_type;
 
 create table wfl_type

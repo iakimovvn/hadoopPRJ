@@ -26,22 +26,20 @@
 <main role="main" class="container" th:object="${workflow}">
     <form class="form-horizontal" th:object="${workflow}" th:action="@{/workflow}" method="post">
 
-        <input th:field="*{title}" class="m-3 form-check-label justify-content-start">
         <input type="hidden" th:field="*{uuid}">
         <input type="hidden" th:field="*{version}">
         <input type="hidden" th:field="*{create_date}">
         <input type="hidden" th:field="*{last_run_date}">
         <input type="hidden" th:field="*{user}">
 
-
-
+        <small class="form-text text-muted" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</small>
+        <input th:field="*{title}" class="m-3 form-check-label justify-content-start">
         <select th:field="*{wfl_type}">
             <option th:if="*{wfl_type!=null}" th:text="*{wfl_type.title}" th:value="*{wfl_type.uuid}">Type</option>
             <option th:each="type : ${types}"
                     th:value="${type.uuid}"
                     th:text="${type.title}">type</option>
         </select>
-
 
         <div>
             <h3>Configuration data</h3>

@@ -4,6 +4,7 @@ import lombok.*;
 import ru.yakimovvn.web.persistence.entities.utils.PersistableEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -22,6 +23,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 public class Workflow extends PersistableEntity {
 
+    @Size(min = 3, max = 30)
     private String title;
 
     @Temporal(TemporalType.TIMESTAMP)

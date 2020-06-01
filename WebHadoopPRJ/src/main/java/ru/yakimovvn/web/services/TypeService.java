@@ -7,6 +7,7 @@ import ru.yakimovvn.web.persistence.entities.Wfl_type;
 import ru.yakimovvn.web.persistence.repositories.TypeRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by IntelliJ Idea.
@@ -27,6 +28,13 @@ public class TypeService {
 
     public Wfl_type findByTitle(String title){
         return typeRepository.findFirstByTitle(title);
+    }
+
+    public List<Wfl_type> getAllWithOutOne(Wfl_type wfl_type){
+        return typeRepository.findAll()
+                .stream()
+                .filter(v -> !v.equals(wfl_type))
+                .collect(Collectors.toList());
     }
 
 

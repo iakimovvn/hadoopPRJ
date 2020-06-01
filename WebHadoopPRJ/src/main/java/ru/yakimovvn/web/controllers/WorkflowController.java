@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.yakimovvn.web.persistence.repositories.UserRepository;
 import ru.yakimovvn.web.services.rabbitmq.RabbitMqService;
@@ -13,6 +14,7 @@ import ru.yakimovvn.web.persistence.entities.Wfl_logfile;
 import ru.yakimovvn.web.persistence.entities.Wfl_type;
 import ru.yakimovvn.web.persistence.entities.Workflow;
 import ru.yakimovvn.web.services.*;
+import ru.yakimovvn.web.validator.WorkflowValidator;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -40,6 +42,8 @@ public class WorkflowController {
     private final LogfileService logfileService;
     private final ConfigService configService;
     private final DirectoryService directoryService;
+
+    private final WorkflowValidator workflowValidator;
 
     private final RabbitMqService rabbitMqService;
 
@@ -87,11 +91,7 @@ public class WorkflowController {
     public String update(@PathVariable("uuid")UUID uuid, Model model){
         Workflow workflow = workflowService.getByUuid(uuid);
         model.addAttribute("workflow",  workflowService.getByUuid(uuid));
-        List<Wfl_type> types = typeService.findAll()
-                .stream()
-                .filter(v -> !v.getUuid().equals(workflow.getWfl_type().getUuid()))
-                .collect(Collectors.toList());
-        model.addAttribute("types", types);
+        model.addAttribute("types", typeService.getAllWithOutOne(workflow.getWfl_type()));
         return "updateWf";
     }
 
@@ -107,7 +107,15 @@ public class WorkflowController {
 
     @PostMapping
 //    @ApiOperation(value = "Сохраннеие  рабочего процесса")
-    public String saveWorkflow(@Valid Workflow workflow) {
+    public String saveWorkflow(Workflow workflow,  BindingResult bindingResult, Model model) {
+
+        workflowValidator.validate(workflow, bindingResult);
+        if(bindingResult.hasErrors()){
+            model.addAttribute("workflow",  workflow);
+            model.addAttribute("types", typeService.getAllWithOutOne(workflow.getWfl_type()));
+            return "updateWf";
+
+        }
         workflow = workflowService.save(workflow);
         return "redirect:/workflow/" + workflow.getUuid();
     }
