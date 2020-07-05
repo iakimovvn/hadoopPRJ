@@ -63,4 +63,8 @@ public class HDFSService {
         item.setGroup(fileStatus.getGroup());
         return item;
     }
+
+    public boolean isPathExists(String path) throws IOException {
+        return fileSystem.exists(new Path(path));
+    }
 }

@@ -1,10 +1,10 @@
 package ru.yakimovvn.web.services.soap;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.yakimovvn.hdfsservice.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,11 +18,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HDFSService {
 
-    public List<HDFSItem> listFolder(String path){
+    @Value("${hadoopprj.hdfs.token}")
+    private String token;
+
+    public List<HDFSItem> listFolder(String path) throws Exception {
         HDFSPort hdfsPort = new HDFSPortService().getHDFSPortSoap11();
 
         GetHDFSRequest request = new GetHDFSRequest();
         request.setPath(path);
+        request.setToken(token);
+        request.setAction("list");
         GetHDFSResponse response;
 
         try {
@@ -31,11 +36,16 @@ public class HDFSService {
             response = null;
         }
 
-        if(response!= null){
+
+
+        if(response!= null && response.getResult().equals("successfully")){
             response.getHdfsItems().forEach(v -> v.setPath(deleteHost(v.getPath())));
+        }else {
+            // отредактировать когда буду добавлять Exception
+            throw new Exception("Hdfs exception:" + (response == null ? "response is null" : response.getResult()));
         }
 
-        return response == null ? new ArrayList<>() : response.getHdfsItems();
+        return response.getHdfsItems();
 
     }
 

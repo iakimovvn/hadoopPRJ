@@ -6,7 +6,9 @@
 	<xs:element name="getHDFSRequest">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="path" type="xs:string" />
+				<xs:element name="token" type="xs:string"/>
+				<xs:element name="action" type="xs:string"/>
+				<xs:element name="path" type="xs:string"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -14,7 +16,8 @@
 	<xs:element name="getHDFSResponse">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="hdfsItems" type="tns:HDFSItem" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element name="result" type="xs:string"/>
+				<xs:element maxOccurs="unbounded" minOccurs="0" name="hdfsItems" type="tns:HDFSItem"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
