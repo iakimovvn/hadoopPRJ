@@ -3,4 +3,5 @@ include 'WebHadoopPRJ'
 include 'SoapHDFS'
 include 'ConfigServerHadoopPRJ'
 include 'LogfileFeignService'
+include 'EureceService'
 

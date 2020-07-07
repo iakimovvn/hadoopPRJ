@@ -1,8 +1,8 @@
-package ru.yakimovvn.logservice;
+package ru.yakimovvn.eureka;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 /**
  * Created by IntelliJ Idea.
@@ -10,10 +10,10 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
  * E-mail: yakimovvn@bk.ru
  */
 
+@EnableEurekaServer
 @SpringBootApplication
-@EnableEurekaClient
-public class LogfileServiceApp {
+public class EurekaServerMain {
     public static void main(String[] args) {
-        SpringApplication.run(LogfileServiceApp.class, args);
+        new SpringApplication(EurekaServerMain.class).run(args);
     }
 }

@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+}
+
+version 'unspecified'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-eureka-server
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-eureka-server', version: '1.4.7.RELEASE'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
