@@ -4,4 +4,5 @@ include 'SoapHDFS'
 include 'ConfigServerHadoopPRJ'
 include 'LogfileFeignService'
 include 'EureceService'
+include 'HadoopPrj-API'
 

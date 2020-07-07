@@ -1,4 +1,4 @@
-package ru.yakimovvn.web.persistence.pojo;
+package ru.yakimovvn.api.pojo;
 
 import lombok.Builder;
 import lombok.Data;

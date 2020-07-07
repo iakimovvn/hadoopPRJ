@@ -5,7 +5,7 @@ import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.stereotype.Service;
-import ru.yakimovvn.web.persistence.pojo.WorkflowPojo;
+import ru.yakimovvn.api.pojo.WorkflowPojo;
 
 /**
  * Created by IntelliJ Idea.
